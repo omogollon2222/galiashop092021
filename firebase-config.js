@@ -1,11 +1,15 @@
-// Galia Shop · Conexión con Firebase (mismo proyecto que Empanadictos).
+// Galia Shop · Conexión con Firebase (proyecto propio: galiashop).
 // Estos datos no son secretos: la protección la dan el inicio de sesión
 // y las reglas de firestore.rules.
 window.FIREBASE_CONFIG = {
-  apiKey: "AIzaSyDNA8HxzKnKYorhPoQ1GF96R4qR52JpMZQ",
-  authDomain: "empanadictos.firebaseapp.com",
-  projectId: "empanadictos",
-  storageBucket: "empanadictos.firebasestorage.app",
-  messagingSenderId: "233462228769",
-  appId: "1:233462228769:web:5743c77509afea96f84060"
+  apiKey: "AIzaSyCKJ0fmec5Q_DNBEIJmL_ITnGLv18Pq82w",
+  authDomain: "galiashop.firebaseapp.com",
+  projectId: "galiashop",
+  storageBucket: "galiashop.firebasestorage.app",
+  messagingSenderId: "470133209661",
+  appId: "1:470133209661:web:33486da39c516dcd9f0854"
 };
+
+// Respaldo en Google Drive: pega aquí la URL de la aplicación web de Apps Script
+// (termina en /exec). Déjalo vacío para no usar el respaldo.
+window.GALIA_DRIVE_URL = "";
