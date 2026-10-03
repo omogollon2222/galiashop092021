@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Solo las cuentas de esta lista pueden leer o escribir.
+    // Para agregar otra cuenta, añade su correo entre comillas.
+    function autorizado() {
+      return request.auth != null
+        && request.auth.token.email in [
+          'omogollon2222@gmail.com'
+        ];
+    }
+    match /{col}/{id} {
+      allow read, write: if autorizado()
+        && col in [
+          // Empanadictos
+          'ventas','cuentas','turnos','perdidas','cierres','tienda',
+          // Galia Shop
+          'galia_sales','galia_inventory','galia_closures','galia_photos'
+        ];
+    }
+  }
+}
