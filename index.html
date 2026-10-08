@@ -20,16 +20,21 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
 /* Galia Shop · Versión web (GitHub Pages). Usa la hoja de Google Sheets de la tienda como base de datos
    a través de un Apps Script publicado como aplicación web. La URL va en config.js. */
 (function(){
-  var KEY = 'galia-clave';
+  var KEY = 'galia-clave', UKEY = 'galia-usuario';
   var API = window.GALIA_API_URL || '';
   function clave(){ try { return localStorage.getItem(KEY) || ''; } catch(e){ return ''; } }
-  function guardarClave(v){ try { if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); } catch(e){} }
+  function usuario(){ try { return localStorage.getItem(UKEY) || ''; } catch(e){ return ''; } }
+  function guardarClave(v, u){ try {
+    if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY);
+    if (u) localStorage.setItem(UKEY, u); else if (!v) localStorage.removeItem(UKEY);
+  } catch(e){} }
+  window.galiaUsuario = usuario;
 
-  async function llamar(accion, datos, claveUsar){
+  async function llamar(accion, datos, claveUsar, usuarioUsar){
     var r;
     try {
       r = await fetch(API, {method: 'POST', redirect: 'follow', headers: {'Content-Type': 'text/plain;charset=utf-8'},
-        body: JSON.stringify({clave: claveUsar != null ? claveUsar : clave(), accion: accion, datos: datos || {}})});
+        body: JSON.stringify({usuario: usuarioUsar != null ? usuarioUsar : usuario(), clave: claveUsar != null ? claveUsar : clave(), accion: accion, datos: datos || {}})});
     } catch(e) { throw {code: 'red', message: 'Sin conexión a internet'}; }
     if (!r.ok) throw {code: 'red', message: 'El servidor no respondió (' + r.status + ')'};
     var j;
@@ -46,6 +51,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
     + '#gLogin .glogo{mix-blend-mode:multiply;width:190px;height:93px;margin:0 auto 6px;background:url(brand-lookbook.png) -14px -3px / 850px 680px no-repeat}#gLogin img{width:190px;max-width:80%;margin:0 auto 6px;display:block}'
     + '#gLogin h1{font:500 21px Georgia,serif;margin:6px 0 4px}#gLogin p{color:#76666c;font-size:14px;line-height:1.45;margin:0 0 18px}'
     + '#gLogin input{width:100%;background:#fff;box-sizing:border-box;min-height:50px;border:1px solid #ddcdd2;border-radius:13px;padding:12px 14px;font:inherit;font-size:17px;text-align:center;outline:none}'
+    + '#gLogin input+input{margin-top:10px}'
     + '#gLogin input:focus{border-color:#ad6880;box-shadow:0 0 0 3px #eecfda}'
     + '#gLogin button{width:100%;margin-top:12px;min-height:52px;border:0;border-radius:13px;background:#ad6880;color:#fff;font-family:inherit;font-weight:600;font-size:16px;cursor:pointer}'
     + '#gLogin button:disabled{opacity:.6}#gLogin .err{color:#a1452f;font-size:14px;min-height:20px;margin-top:12px}'
@@ -57,24 +63,26 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
     var o = document.getElementById('gLogin'); if (o) o.remove();
     o = document.createElement('div'); o.id = 'gLogin';
     o.innerHTML = '<form class="card"><div class="glogo" role="img" aria-label="Galia Shop"></div><h1>Bienvenida</h1>'
-      + '<p>Escribe la clave del negocio para entrar. Solo se pide una vez en cada dispositivo.</p>'
-      + '<input type="password" id="gClave" autocomplete="current-password" placeholder="Clave del negocio" required>'
+      + '<p>Escribe tu correo y tu clave para entrar. Solo se pide una vez en cada dispositivo.</p>'
+      + '<input type="email" id="gCorreo" autocomplete="username" inputmode="email" autocapitalize="off" placeholder="Correo" required>'
+      + '<input type="password" id="gClave" autocomplete="current-password" placeholder="Clave" required>'
       + '<button type="submit" id="gEntrar">Entrar</button><div class="err" id="gErr"></div>'
       + '<small>¿No tienes la clave? Pídela a la administración de Galia Shop.</small></form>';
     document.body.appendChild(o);
-    var err = o.querySelector('#gErr'), btn = o.querySelector('#gEntrar'), inp = o.querySelector('#gClave');
+    var err = o.querySelector('#gErr'), btn = o.querySelector('#gEntrar'), inp = o.querySelector('#gClave'), mail = o.querySelector('#gCorreo');
     err.textContent = aviso || '';
-    setTimeout(function(){ inp.focus(); }, 50);
+    mail.value = usuario();
+    setTimeout(function(){ (mail.value ? inp : mail).focus(); }, 50);
     o.querySelector('form').addEventListener('submit', async function(e){
       e.preventDefault();
-      var v = inp.value.trim(); if (!v) return;
+      var v = inp.value.trim(), u = mail.value.trim().toLowerCase(); if (!v || !u) return;
       btn.disabled = true; btn.textContent = 'Verificando…'; err.textContent = '';
       try {
-        await llamar('ping', {}, v);
-        guardarClave(v); o.remove();
+        await llamar('ping', {}, v, u);
+        guardarClave(v, u); o.remove();
         if (alEntrar) alEntrar(); else location.reload();
       } catch(x) {
-        err.textContent = x.code === 'clave' ? 'Clave incorrecta. Inténtalo de nuevo.' : (x.message || 'No se pudo conectar.');
+        err.textContent = x.code === 'clave' ? 'Correo o clave incorrectos. Inténtalo de nuevo.' : (x.message || 'No se pudo conectar.');
         btn.disabled = false; btn.textContent = 'Entrar'; inp.select();
       }
     });
@@ -87,12 +95,22 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
       if (b) b.innerHTML = '<b>GALIA SHOP</b><span style="max-width:320px;text-align:center;line-height:1.5">Falta configurar la dirección del servidor en el archivo <b>config.js</b>.</span>';
       return;
     }
-    if (clave()) start(); else mostrarLogin('', start);
+    if (clave() && usuario()) start(); else mostrarLogin('', start);
   };
   // Fotos de inventario guardadas en Drive
   window.GALIA_BLOB = function(id){ return 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(id) + '&sz=w1000'; };
 
   window.galiaSalir = function(){ guardarClave(''); location.reload(); };
+  // Botón discreto para cambiar de usuario
+  css.textContent += '#gUser{position:fixed;top:calc(8px + env(safe-area-inset-top));right:8px;z-index:50;border:1px solid #e3cfd6;background:#fffc;color:#8f526a;border-radius:999px;padding:5px 11px;font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer}';
+  window.galiaBotonUsuario = function(){
+    var u = usuario(); if (!u || document.getElementById('gUser')) return;
+    var bt = document.createElement('button'); bt.id = 'gUser'; bt.type = 'button';
+    bt.textContent = u.split('@')[0] + ' · Salir';
+    bt.title = 'Cerrar sesión (' + u + ')';
+    bt.onclick = function(){ if (confirm('¿Cerrar sesión de ' + u + '?')) window.galiaSalir(); };
+    document.body.appendChild(bt);
+  };
   window.galiaMostrarLogin = mostrarLogin;
 })();
 </script>
@@ -319,6 +337,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
     try { history.replaceState(null, '', '#' + name); } catch(e){}
   };
   function startApp(){
+    if (window.galiaBotonUsuario) window.galiaBotonUsuario();
     var start = (location.hash || '').slice(1);
     galiaShow(DATA.pages[start] ? start : 'registro');
   }
@@ -385,7 +404,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
       return json({error: 'No encontrado'}, 404);
     } catch(e) {
       console.warn('[galia]', e);
-      if (e && e.code === 'clave') { try { localStorage.removeItem('galia-clave'); } catch(_){} window.galiaMostrarLogin('La clave cambió. Escribe la nueva clave.'); return json({error: 'Clave incorrecta'}, 401); }
+      if (e && e.code === 'clave') { try { localStorage.removeItem('galia-clave'); } catch(_){} window.galiaMostrarLogin('Vuelve a escribir tu correo y tu clave.'); return json({error: 'Clave incorrecta'}, 401); }
       if (e && e.code === 'red') return json({error: 'Sin conexión. Inténtalo de nuevo.'}, 503);
       return json({error: (e && e.message) || 'No se pudo guardar. Inténtalo de nuevo.'}, 503);
     }
