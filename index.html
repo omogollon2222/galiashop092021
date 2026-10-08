@@ -29,12 +29,13 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
     if (u) localStorage.setItem(UKEY, u); else if (!v) localStorage.removeItem(UKEY);
   } catch(e){} }
   window.galiaUsuario = usuario;
+  function normCorreo(v){ var c = String(v || '').replace(/\s+/g, '').toLowerCase(); if (c && c.indexOf('@') < 0) c += '@gmail.com'; return c; }
 
-  async function llamar(accion, datos, claveUsar, usuarioUsar){
+  async function llamar(accion, datos, claveUsar, usuarioUsar, crearClave){
     var r;
     try {
       r = await fetch(API, {method: 'POST', redirect: 'follow', headers: {'Content-Type': 'text/plain;charset=utf-8'},
-        body: JSON.stringify({usuario: usuarioUsar != null ? usuarioUsar : usuario(), clave: claveUsar != null ? claveUsar : clave(), accion: accion, datos: datos || {}})});
+        body: JSON.stringify({usuario: usuarioUsar != null ? usuarioUsar : usuario(), clave: claveUsar != null ? claveUsar : clave(), crearClave: !!crearClave, accion: accion, datos: datos || {}})});
     } catch(e) { throw {code: 'red', message: 'Sin conexión a internet'}; }
     if (!r.ok) throw {code: 'red', message: 'El servidor no respondió (' + r.status + ')'};
     var j;
@@ -64,26 +65,39 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family
     o = document.createElement('div'); o.id = 'gLogin';
     o.innerHTML = '<form class="card"><div class="glogo" role="img" aria-label="Galia Shop"></div><h1>Bienvenida</h1>'
       + '<p>Escribe tu correo y tu clave para entrar. Solo se pide una vez en cada dispositivo.</p>'
-      + '<input type="email" id="gCorreo" autocomplete="username" inputmode="email" autocapitalize="off" placeholder="Correo" required>'
+      + '<input type="text" id="gCorreo" autocomplete="username" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Correo (ej. galiashop092021)" required>'
       + '<input type="password" id="gClave" autocomplete="current-password" placeholder="Clave" required>'
+      + '<input type="password" id="gClave2" autocomplete="new-password" placeholder="Repite la clave" hidden>'
       + '<button type="submit" id="gEntrar">Entrar</button><div class="err" id="gErr"></div>'
       + '<small>¿No tienes la clave? Pídela a la administración de Galia Shop.</small></form>';
     document.body.appendChild(o);
-    var err = o.querySelector('#gErr'), btn = o.querySelector('#gEntrar'), inp = o.querySelector('#gClave'), mail = o.querySelector('#gCorreo');
+    var err = o.querySelector('#gErr'), btn = o.querySelector('#gEntrar'), inp = o.querySelector('#gClave'), mail = o.querySelector('#gCorreo'), inp2 = o.querySelector('#gClave2'), crear = false;
+    function modoCrear(){
+      crear = true; inp2.hidden = false; inp2.required = true;
+      o.querySelector('h1').textContent = 'Crea tu clave';
+      o.querySelector('p').textContent = 'Es la primera vez que entras con ' + normCorreo(mail.value) + '. Elige una clave (mínimo 4 caracteres) y repítela.';
+      inp.placeholder = 'Nueva clave'; inp.autocomplete = 'new-password';
+      btn.textContent = 'Crear clave y entrar'; inp.value = ''; inp2.value = ''; inp.focus();
+    }
     err.textContent = aviso || '';
     mail.value = usuario();
     setTimeout(function(){ (mail.value ? inp : mail).focus(); }, 50);
     o.querySelector('form').addEventListener('submit', async function(e){
       e.preventDefault();
-      var v = inp.value.trim(), u = mail.value.trim().toLowerCase(); if (!v || !u) return;
+      var v = inp.value.trim(), u = normCorreo(mail.value); if (!v || !u) return;
+      if (crear && v.length < 4) { err.textContent = 'La clave debe tener al menos 4 caracteres.'; return; }
+      if (crear && v !== inp2.value.trim()) { err.textContent = 'Las dos claves no coinciden.'; inp2.select(); return; }
+      var txt = btn.textContent;
       btn.disabled = true; btn.textContent = 'Verificando…'; err.textContent = '';
       try {
-        await llamar('ping', {}, v, u);
+        await llamar('ping', {}, v, u, crear);
         guardarClave(v, u); o.remove();
         if (alEntrar) alEntrar(); else location.reload();
       } catch(x) {
-        err.textContent = x.code === 'clave' ? 'Correo o clave incorrectos. Inténtalo de nuevo.' : (x.message || 'No se pudo conectar.');
-        btn.disabled = false; btn.textContent = 'Entrar'; inp.select();
+        btn.disabled = false; btn.textContent = txt;
+        if (x.code === 'nueva' && !crear) { modoCrear(); return; }
+        err.textContent = x.code === 'nueva' ? (x.message || 'Revisa la clave.') : x.code === 'clave' ? ((x.message && x.message !== 'clave') ? x.message.replace(/\.?$/, '.') : 'Correo o clave incorrectos.') + ' Inténtalo de nuevo.' : (x.message || 'No se pudo conectar.');
+        inp.select();
       }
     });
   }
