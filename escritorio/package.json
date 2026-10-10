@@ -1,0 +1,50 @@
+{
+  "name": "galia-shop",
+  "productName": "Galia Shop",
+  "version": "1.0.0",
+  "description": "Galia Shop · Ventas e inventario",
+  "author": "Galia Shop",
+  "main": "main.js",
+  "private": true,
+  "scripts": {},
+  "build": {
+    "appId": "com.galiashop.app",
+    "productName": "Galia Shop",
+    "executableName": "GaliaShop",
+    "files": [
+      "main.js",
+      "preload.js",
+      "offline.html",
+      "icon.png"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Galia Shop",
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "artifactName": "GaliaShop-Instalador-${version}.exe",
+      "language": "3082"
+    }
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3",
+    "resedit": "^2.0.3"
+  }
+}

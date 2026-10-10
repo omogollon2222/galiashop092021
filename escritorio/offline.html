@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Galia Shop · Sin conexión</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#f7eef1;color:#3b2530;font-family:"Segoe UI",system-ui,sans-serif}
+.box{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}
+b{font:600 28px Georgia,serif;color:#ad6880;letter-spacing:.04em}
+p{max-width:420px;line-height:1.5;color:#76666c;margin:0}
+button{margin-top:10px;min-height:46px;padding:0 28px;border:0;border-radius:12px;background:#ad6880;color:#fff;font:600 16px inherit;cursor:pointer}
+</style></head>
+<body><div class="box">
+<b>GALIA SHOP</b>
+<p>No hay conexión a internet. La app guarda las ventas y el inventario en Google Drive, así que necesita internet para abrir.</p>
+<button id="r">Reintentar</button>
+<p id="t" style="font-size:13px"></p>
+</div>
+<script>
+var URL_APP = 'https://omogollon2222.github.io/galiashop092021/';
+function go(){ document.getElementById('t').textContent = 'Conectando…'; location.href = URL_APP; }
+document.getElementById('r').onclick = go;
+window.addEventListener('online', go);
+setInterval(function(){ if (navigator.onLine) go(); }, 15000);
+</script>
+</body></html>
