@@ -10,7 +10,7 @@
   document.addEventListener('click', function(e){
     var a = e.target && e.target.closest && e.target.closest('a[href]');
     if (!a) return;
-    var m = (a.getAttribute('href') || '').match(/^\/(registro|inventario|analisis)\.html/);
+    var m = (a.getAttribute('href') || '').match(/^\/(registro|inventario|analisis|clientes)\.html/);
     if (m) { e.preventDefault(); P.galiaShow(m[1]); }
   }, true);
 })();

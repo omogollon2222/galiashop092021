@@ -1,0 +1,724 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clientes · Galia Shop</title><style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;color:#30232a;background:#f8f3f2;--ac:#a8617b;--ac2:#8c4c65;--soft:#f3e5ea;--line:#eadce1;--mut:#75636b}
+*{box-sizing:border-box}body{margin:0}
+.app{max-width:1100px;margin:auto;padding:24px 18px 80px}
+h1,h2,h3{font-family:Georgia,serif;font-weight:400}h1{font-size:29px;margin:7px 0 18px}h2{font-size:21px;margin:0}h3{font-size:17px;margin:0 0 8px}
+header small{color:#8a6f7a;letter-spacing:.05em}
+.tabs{display:flex;gap:8px;margin:0 0 18px}.tabs a{flex:1;text-align:center;text-decoration:none;border-radius:12px;padding:12px 4px;background:#fff;border:1px solid #dec6cf;color:#87506a;font-weight:700}.tabs .active{background:var(--ac);color:#fff}
+.btn{border:0;border-radius:11px;padding:10px 15px;font:600 14.5px inherit;font-family:inherit;cursor:pointer;min-height:42px;background:var(--ac);color:#fff}.btn.sec{background:var(--soft);color:#763c55}.btn.line{background:#fff;border:1px solid #dec6cf;color:#763c55}.btn:disabled{opacity:.55;cursor:default}.btn.sm{min-height:34px;padding:6px 11px;font-size:13px;border-radius:9px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 6px 22px #50313b0a;min-width:0}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.sub{color:var(--mut);font-size:13.5px;margin:3px 0 0;line-height:1.45}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px}.kpi small{display:block;color:#806a73;font-size:12.5px;margin-bottom:6px}.kpi strong{font-size:23px;color:var(--ac2)}.kpi span{display:block;font-size:12px;color:var(--mut);margin-top:4px}
+.seg{display:flex;gap:4px;background:var(--soft);border-radius:13px;padding:4px;margin:16px 0 4px;overflow-x:auto}
+.seg button{flex:1;border:0;background:none;padding:10px 12px;border-radius:10px;font:650 14px inherit;font-family:inherit;color:#763c55;cursor:pointer;white-space:nowrap}.seg button.on{background:var(--ac);color:#fff}
+.seg button .n{display:inline-block;min-width:20px;padding:1px 6px;margin-left:5px;border-radius:999px;background:#fff;color:var(--ac2);font-size:11.5px}
+.status{font-size:13px;color:var(--mut);margin:6px 2px}.status.err{color:#a1452f}.status.ok{color:#2f6844}
+.banner{border-radius:15px;padding:13px 15px;margin:10px 0;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:14px;line-height:1.45}
+.banner.info{background:#fdeef4;border:1px solid #efc3d4;color:#7a2e4d}.banner.warn{background:#fff6e6;border:1px solid #f0d9a8;color:#6b4a10}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:9px 8px;border-bottom:1px solid #eee0e4;text-align:left;vertical-align:middle}th{color:#815269;font-size:12.5px;font-weight:650}td.num,th.num{text-align:right;white-space:nowrap}
+.tw{overflow-x:auto}
+.name{font-weight:650}.meta{display:block;color:#806a73;font-size:12px;margin-top:2px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap;background:var(--soft);color:var(--ac2)}
+.wa{display:inline-flex;align-items:center;gap:5px;background:#1f8f4e;color:#fff;border:0;border-radius:9px;padding:7px 11px;font:600 12.5px inherit;font-family:inherit;text-decoration:none;cursor:pointer;white-space:nowrap}
+.wa.ask{background:#6a7f2a}.wa.off{background:#c9bcc1;pointer-events:none}
+.lnk{text-decoration:none;border:1px solid #dec6cf;background:#fff;color:#763c55;border-radius:9px;padding:6px 9px;font:600 12px inherit;font-family:inherit;cursor:pointer;white-space:nowrap}
+.acts{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.row-click{cursor:pointer}.row-click:hover td{background:#fbf5f7}
+.empty{color:var(--mut);font-size:14px;padding:12px 2px}
+.grp{margin:4px 0 16px}.grp h3{display:flex;align-items:center;gap:8px}.grp h3 .pill{font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.tools input,.tools select,.fld input,.fld select,.fld textarea{border:1px solid #d8bec8;border-radius:10px;padding:9px 11px;font:inherit;font-size:14.5px;background:#fff;min-height:42px}
+.tools input[type=search]{flex:1;min-width:180px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.chip{border:1px solid #dec6cf;background:#fff;color:#763c55;border-radius:999px;padding:6px 11px;font:600 12.5px inherit;font-family:inherit;cursor:pointer}.chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.segs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.sc{border:1px solid var(--line);border-radius:16px;padding:15px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.sc .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.sc b.big{font-size:26px;color:var(--ac2);font-weight:600}
+.sc p{margin:0;font-size:13px;color:#5d4b53;line-height:1.45}.sc>button{margin-top:auto}.sc .do{background:#faf4f6;border-radius:10px;padding:8px 10px;font-size:12.5px;color:#6b3d50}
+.bar{height:7px;background:#f1e3e8;border-radius:5px}.bar i{display:block;height:100%;border-radius:5px;background:var(--ac)}
+.heat{border-collapse:separate;border-spacing:4px;font-size:12.5px;width:auto}.heat td,.heat th{border:0;padding:0;text-align:center}.heat td{width:52px;height:38px;border-radius:8px;font-weight:650}.heat th{color:#815269;font-weight:600;padding:2px 6px}
+.c-vip{background:#a8617b;color:#fff}.c-leal{background:#c98aa1;color:#fff}.c-nueva{background:#e7f3ea;color:#2f6844}.c-prom{background:#f6eecf;color:#6b5510}.c-riesgo{background:#fde3dc;color:#9a3a22}.c-dorm{background:#efe7ea;color:#6f5c64}.c-perd{background:#e4e0e2;color:#5a4f54}.c-lead{background:#e6eef8;color:#2f4f7a}
+.ov{position:fixed;inset:0;background:#241d20a6;z-index:40;display:flex;justify-content:flex-end}
+.drawer{background:#f8f3f2;width:min(100%,720px);height:100%;overflow:auto;padding:18px 18px 60px;box-shadow:-10px 0 40px #0003}
+.drawer .x{position:sticky;top:0;float:right;border:0;background:#fff;border-radius:50%;width:38px;height:38px;font-size:20px;cursor:pointer;color:#763c55;box-shadow:0 2px 8px #0002;z-index:2}
+.fhead{display:flex;flex-direction:column;gap:6px;margin:4px 0 12px}.fhead h2{font-size:25px}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fld{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:#806a73;font-weight:600}.fld textarea{min-height:70px;resize:vertical}.fld input,.fld select,.fld textarea{width:100%;min-width:0}.fgrid>*{min-width:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.note{border-left:3px solid #e3c4d0;padding:6px 10px;margin:8px 0;font-size:14px;line-height:1.45;background:#fff;border-radius:0 10px 10px 0}.note small{display:block;color:#8a7880;font-size:11.5px}
+.hist li{margin:0 0 9px;font-size:13.5px;line-height:1.4}.hist{padding-left:18px;margin:6px 0}
+.tpl textarea{width:100%;min-height:60px;border:1px solid #d8bec8;border-radius:10px;padding:9px;font:inherit;font-size:13.5px;margin-top:4px}
+.tpl label{display:block;font-size:13px;font-weight:650;color:#763c55;margin-top:10px}
+details summary{cursor:pointer;color:var(--ac2);font-weight:650;font-size:14px}
+.save{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:#30232a;color:#fff;border-radius:999px;padding:8px 16px;font-size:13px;z-index:60;opacity:0;transition:opacity .25s;pointer-events:none}.save.show{opacity:.92}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.fgrid{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}.hide-m{display:none}.tabs a{font-size:13.5px}.panel{padding:15px}.wa .l{display:none}th,td{padding:8px 5px}.seg button{padding:9px 7px;font-size:13px}.seg button .n{margin-left:3px}.drawer .wa .l{display:inline}}
+@media (min-width:1024px){.app{max-width:1360px;padding:24px 32px 60px}.app>.top-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:center}.app>.top-row .tabs{margin:0}.tabs a:not(.active):hover{background:#f9edf1}.two{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}.two>.panel{margin:0}}
+</style></head><body><main class="app">
+<div class="top-row"><header><small>GALIA SHOP · CLIENTES</small><h1>Relación con clientes</h1></header>
+<nav class="tabs"><a href="/registro.html">Ventas</a><a href="/inventario.html">Inventario</a><a href="/analisis.html">Análisis</a><a class="active" href="/clientes.html" aria-current="page">Clientes</a></nav></div>
+<div class="kpis" id="kpis"></div>
+<p class="status" id="status" aria-live="polite">Cargando clientes…</p>
+<div id="banners"></div>
+<div class="seg" id="views" role="tablist">
+  <button type="button" data-v="seg" class="on">Para hoy<span class="n" id="nSeg">0</span></button>
+  <button type="button" data-v="cli">Clientes<span class="n" id="nCli">0</span></button>
+  <button type="button" data-v="rfm">Segmentos</button>
+  <button type="button" data-v="pts">Fidelidad</button>
+</div>
+<section id="v-seg"></section>
+<section id="v-cli" hidden></section>
+<section id="v-rfm" hidden></section>
+<section id="v-pts" hidden></section>
+</main>
+<div class="save" id="saveTip"></div>
+<input type="file" id="histFile" accept=".json,application/json" hidden>
+<script>
+(function(){
+'use strict';
+var TZ = 'America/Guayaquil';
+var $ = function(id){ return document.getElementById(id); };
+var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+var money = function(n){ return '$' + (Number(n) || 0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); };
+var r2 = function(n){ return Math.round((Number(n) || 0) * 100) / 100; };
+var today = function(){ return new Intl.DateTimeFormat('en-CA', {timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'}).format(new Date()); };
+var addDays = function(d, n){ var t = new Date(d + 'T12:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
+var diffDays = function(a, b){ return Math.round((Date.parse(b + 'T12:00:00Z') - Date.parse(a + 'T12:00:00Z')) / 86400000); };
+var fmt = function(d, o){ if (!/^\d{4}-\d{2}-\d{2}/.test(d || '')) return d || '—'; try { return new Intl.DateTimeFormat('es-EC', Object.assign({timeZone: 'UTC'}, o || {day: 'numeric', month: 'short'})).format(new Date(d.slice(0, 10) + 'T12:00:00Z')); } catch(_){ return d; } };
+var fmtY = function(d){ return fmt(d, {day: 'numeric', month: 'short', year: 'numeric'}); };
+var norm = function(s){ return String(s || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' '); };
+var digits = function(s){ return String(s || '').replace(/\D/g, ''); };
+var phoneKey = function(p){ var d = digits(p); return d.length >= 7 ? d.slice(-9) : ''; };
+var first = function(n){ var f = String(n || '').trim().split(/\s+/)[0] || ''; return f ? f.charAt(0).toUpperCase() + f.slice(1).toLowerCase() : ''; };
+var uid = function(){ return (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)).slice(0, 13); };
+var plural = function(n, s, p){ return n + ' ' + (n === 1 ? s : (p || s + 's')); };
+function me(){ try { return (window.parent && window.parent.galiaUsuario && window.parent.galiaUsuario()) || ''; } catch(_){ return ''; } }
+function confirmBox(t){ return window.galiaConfirm ? window.galiaConfirm(t) : Promise.resolve(confirm(t)); }
+function promptBox(t){ return window.galiaPrompt ? window.galiaPrompt(t) : Promise.resolve(prompt(t)); }
+
+/* ============ Segmentos (RFM) ============ */
+var SEG = {
+  vip:    {n: 'Campeonas', c: 'c-vip', d: 'Compran seguido, hace poco y gastan más.', a: 'Agradece, avísales primero de las novedades y pídeles que te recomienden.'},
+  leal:   {n: 'Leales', c: 'c-leal', d: 'Varias compras y siguen activas.', a: 'Envía novedades de sus categorías favoritas y recuérdales sus puntos.'},
+  nueva:  {n: 'Nuevas', c: 'c-nueva', d: 'Primera compra en los últimos 30 días.', a: 'Pregunta qué tal les quedó y motiva la segunda compra.'},
+  prom:   {n: 'Prometedoras', c: 'c-prom', d: 'Compraron 1–2 veces en los últimos 60 días.', a: 'Muéstrales prendas parecidas a lo que compraron.'},
+  riesgo: {n: 'En riesgo', c: 'c-riesgo', d: 'Eran buenas clientas y llevan más de 60 días sin volver.', a: 'Escríbeles personalmente con algo pensado para ellas.'},
+  dorm:   {n: 'Dormidas', c: 'c-dorm', d: 'Entre 61 y 90 días sin comprar.', a: 'Mensaje de reactivación con novedades.'},
+  perd:   {n: 'Perdidas', c: 'c-perd', d: 'Más de 90 días sin comprar.', a: 'Campaña de regreso con una oferta clara, o pide permiso para escribirles.'},
+  lead:   {n: 'Interesadas', c: 'c-lead', d: 'Contactos que aún no compran.', a: 'Envía fotos de lo que buscan y una invitación a la tienda.'}
+};
+var SEG_ORDER = ['vip', 'leal', 'nueva', 'prom', 'riesgo', 'dorm', 'perd', 'lead'];
+var rScore = function(days){ return days <= 15 ? 5 : days <= 30 ? 4 : days <= 60 ? 3 : days <= 90 ? 2 : 1; };
+var fScore = function(f){ return f >= 6 ? 5 : f >= 4 ? 4 : f; };
+function segmentOf(c){
+  if (!c.F) return 'lead';
+  var R = c.R, F = c.Fs, M = c.Ms;
+  if (R >= 4 && F >= 3 && M >= 4) return 'vip';
+  if (R >= 3 && F >= 3) return 'leal';
+  if (F === 1 && R >= 4) return 'nueva';
+  if (R >= 3) return 'prom';
+  if (F >= 3 || M >= 4) return 'riesgo';
+  if (R === 2) return 'dorm';
+  return 'perd';
+}
+
+/* ============ Mensajes ============ */
+var MSG = {
+  cobro:   {l: 'Cobro', mk: false, t: 'Hola {nombre} 💕 Te escribimos de Galia Shop para recordarte tu saldo de {saldo}{vence}. Puedes abonar por transferencia o en la tienda. ¡Gracias por tu confianza!'},
+  post:    {l: 'Post-venta', mk: false, t: 'Hola {nombre} 💕 ¿Qué tal te quedó tu compra en Galia Shop? Si necesitas cambio de talla o tienes alguna duda, aquí estamos.'},
+  bday:    {l: 'Cumpleaños', mk: true, t: '¡Feliz cumpleaños, {nombre}! 🎉 En Galia Shop queremos celebrarte: tienes un detalle especial en tu próxima compra. ¡Que tengas un día hermoso!'},
+  react:   {l: 'Reactivar', mk: true, t: 'Hola {nombre} 💕 Te extrañamos en Galia Shop. Llegaron prendas nuevas que te pueden encantar. ¿Te envío fotos?'},
+  nuevo:   {l: 'Segunda compra', mk: true, t: 'Hola {nombre} 💖 Gracias por tu primera compra en Galia Shop. Llegaron novedades en {categoria} que combinan con lo que llevaste. ¿Te mando fotos?'},
+  top:     {l: 'Agradecer', mk: true, t: 'Hola {nombre} 💖 ¡Gracias por elegirnos! Eres una de nuestras mejores clientas. Pronto te contamos las novedades antes que a nadie.'},
+  puntos:  {l: 'Puntos', mk: true, t: 'Hola {nombre} 🎁 Tienes {puntos} puntos en Galia Shop, que equivalen a {valor} de descuento en tu próxima compra. ¡Te esperamos!'},
+  permiso: {l: 'Pedir permiso', mk: false, t: 'Hola {nombre}, te saluda Galia Shop 💕 ¿Te gustaría recibir por WhatsApp nuestras novedades y promociones? Responde SÍ y solo te escribiremos cuando haya algo especial. Si prefieres no recibirlas, responde NO.'},
+  libre:   {l: 'Mensaje', mk: false, t: 'Hola {nombre} 💕 Te saluda Galia Shop.'}
+};
+var MSG_EDIT = ['cobro', 'post', 'bday', 'react', 'nuevo', 'top', 'puntos', 'permiso'];
+
+/* ============ Estado ============ */
+var LSB = 'galia-crm-respaldo';
+var sales = [], inventory = [], S = {}, offline = false;
+var view = 'seg', cliFilter = 'all', cliQuery = '', cliSort = 'total', openKey = null;
+var C = [], byKey = {}, fichaDirty = false;
+
+function fix(st){
+  st = st && typeof st === 'object' ? st : {};
+  st.tpl = st.tpl || {}; st.contacted = st.contacted || {};
+  var c = st.crm = (st.crm && typeof st.crm === 'object') ? st.crm : {};
+  c.v = 1; c.prof = c.prof || {}; c.alias = c.alias || {}; c.nodup = c.nodup || []; c.tasks = c.tasks || []; c.log = c.log || [];
+  c.cfg = c.cfg || {consent: true};
+  if (c.pts) c.pts.mov = c.pts.mov || [];
+  return st;
+}
+var tpl = function(k){ return S.tpl[k] || MSG[k].t; };
+
+/* ---------- Guardado: se relee la hoja y se aplica el cambio encima (no pisa lo de otro dispositivo) ---------- */
+var queue = [], saving = false, retryT = null;
+function mutate(fn, note){
+  fn(S); queue.push(fn);
+  try { localStorage.setItem(LSB, JSON.stringify(S)); } catch(_){}
+  rebuild(); tip(note || 'Guardando…');
+  flush();
+}
+async function flush(){
+  if (saving || !queue.length) return;
+  saving = true; clearTimeout(retryT);
+  while (queue.length) {
+    var ops = queue.slice();
+    try {
+      var r = await fetch('/api/settings', {cache: 'no-store'});
+      if (!r.ok) throw new Error('leer');
+      var fresh = fix((await r.json()).settings || {});
+      ops.forEach(function(f){ f(fresh); });
+      var w = await fetch('/api/settings', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({settings: fresh})});
+      var wj = await w.json().catch(function(){ return {}; });
+      if (!w.ok || wj.error) throw new Error(wj.error || 'guardar');
+      queue.splice(0, ops.length);
+      S = fresh; queue.forEach(function(f){ f(S); });
+      offline = false; tip('Guardado en Google Drive ✓', 1600);
+    } catch(e) {
+      offline = true; tip('Sin conexión: se guardará al volver internet', 3000);
+      retryT = setTimeout(flush, 15000);
+      break;
+    }
+  }
+  saving = false;
+  try { localStorage.setItem(LSB, JSON.stringify(S)); } catch(_){}
+  rebuild();
+}
+var tipT;
+function tip(t, ms){ var e = $('saveTip'); e.textContent = t; e.classList.add('show'); clearTimeout(tipT); if (ms) tipT = setTimeout(function(){ e.classList.remove('show'); }, ms); }
+
+/* ============ Construcción de la base de clientes ============ */
+function itemsOf(x){ return Array.isArray(x.items) && x.items.length ? x.items : [{description: x.description || '', code: x.code || '', quantity: 1, price: Number(x.amount) || 0}]; }
+function rawKey(s){
+  var ph = phoneKey(s.phone); if (ph) return 'p' + ph;
+  var ci = digits(s.cedula); if (ci) return 'c' + ci;
+  var n = norm(s.client); return n ? 'n' + n : null;
+}
+function resolve(k){ var a = S.crm.alias, i = 0; while (k && a[k] && i++ < 12) k = a[k]; return k; }
+
+function rebuild(){
+  var crm = S.crm, t = today();
+  var cat = {};
+  (Array.isArray(inventory) ? inventory : []).forEach(function(p){ var k = String(p.code || '').trim().toUpperCase(); if (k) cat[k] = p.category || p.categoria || ''; });
+  var map = {}, phIdx = {}, ciIdx = {};
+  Object.keys(crm.prof).forEach(function(k){ var p = crm.prof[k], rk = resolve(k); if (phoneKey(p.phone)) phIdx[phoneKey(p.phone)] = rk; if (digits(p.cedula).length >= 6) ciIdx[digits(p.cedula)] = rk; });
+  function get(k, name){
+    k = resolve(k);
+    return map[k] || (map[k] = {key: k, name: name || '', buys: [], sales: [], names: {}, cat: {}, pe: 0, phone: '', cedula: '', email: '', address: '', birthday: '', histCredit: 0});
+  }
+  // 1) Historial (corte 02/10/2026)
+  ((crm.hist && crm.hist.clientes) || []).forEach(function(h){
+    var k = 'n' + norm(h.n), c = get(k, h.n);
+    c.names[h.n] = 1; if (!c.name) c.name = h.n;
+    h.h.forEach(function(v){ var cr = Number(v[3]) || 0; c.buys.push({d: v[0], amt: Number(v[1]) || 0, u: Number(v[2]) || 0, paid: r2(v[1] - cr), credit: cr, src: 'h'}); c.histCredit += cr; });
+    Object.keys(h.cat || {}).forEach(function(x){ c.cat[x] = (c.cat[x] || 0) + h.cat[x]; });
+    c.pe += h.pe || 0;
+  });
+  // 2) Ventas registradas en la app
+  sales.slice().sort(function(a, b){ return String(a.date).localeCompare(String(b.date)) || String(a.created || '').localeCompare(String(b.created || '')); }).forEach(function(s){
+    var rk = rawKey(s); if (!rk) return;
+    var k = crm.alias[rk] ? resolve(rk) : null;
+    if (!k) { var ph = phoneKey(s.phone), ci = digits(s.cedula); k = (ph && phIdx[ph]) || (ci.length >= 6 && ciIdx[ci]) || null; }
+    if (!k) { var nn = norm(s.client); if (nn.split(' ').length >= 2 && map[resolve('n' + nn)]) k = resolve('n' + nn); }
+    var c = get(k || rk, s.client);
+    if (s.client) { c.name = String(s.client).trim(); c.names[c.name] = 1; }
+    ['phone', 'cedula', 'email', 'address', 'birthday'].forEach(function(f){ if (s[f]) c[f] = String(s[f]).trim(); });
+    if (phoneKey(s.phone) && !phIdx[phoneKey(s.phone)]) phIdx[phoneKey(s.phone)] = c.key;
+    if (digits(s.cedula).length >= 6 && !ciIdx[digits(s.cedula)]) ciIdx[digits(s.cedula)] = c.key;
+    var u = 0;
+    itemsOf(s).forEach(function(i){ var q = Number(i.quantity) || 1; u += q; var ct = cat[String(i.code || '').trim().toUpperCase()]; if (ct) c.cat[ct] = (c.cat[ct] || 0) + q; });
+    var amt = Number(s.amount) || 0, paid = s.paid != null ? Number(s.paid) || 0 : amt;
+    c.sales.push(s);
+    c.buys.push({d: s.date, amt: amt, u: u, paid: paid, credit: s.paymentType === 'credito' ? amt : 0, bal: Math.max(0, r2(amt - paid)), due: s.dueDate || (s.paymentType === 'credito' ? addDays(s.date, 7) : ''), src: 'a', s: s});
+  });
+  // 3) Contactos creados a mano (interesadas) y datos editados
+  Object.keys(crm.prof).forEach(function(k){ var p = crm.prof[k]; if (crm.alias[k]) return; if (!map[k] && p.name) get(k, p.name); });
+  var pts = crm.pts && crm.pts.on ? crm.pts : null, movBy = {}, logBy = {};
+  if (pts) pts.mov.forEach(function(m){ var k = resolve(m.k); (movBy[k] = movBy[k] || []).push(m); });
+  crm.log.forEach(function(l){ var k = resolve(l.k); (logBy[k] = logBy[k] || []).push(l); });
+  var list = Object.keys(map).map(function(k){ return map[k]; });
+  list.forEach(function(c){
+    var p = crm.prof[c.key] || {};
+    ['name', 'phone', 'cedula', 'email', 'address', 'birthday'].forEach(function(f){ if (p[f]) c[f] = p[f]; });
+    c.tags = p.tags || []; c.ok = p.ok || ''; c.okD = p.okD || ''; c.notes = p.notes || []; c.manual = !!p.manual; c.interest = p.interest || '';
+    c.buys.sort(function(a, b){ return a.d.localeCompare(b.d); });
+    var days = {}; c.buys.forEach(function(b){ days[b.d] = 1; });
+    c.F = Object.keys(days).length;
+    c.total = r2(c.buys.reduce(function(n, b){ return n + b.amt; }, 0));
+    c.units = c.buys.reduce(function(n, b){ return n + b.u; }, 0);
+    c.first = c.buys.length ? c.buys[0].d : ''; c.last = c.buys.length ? c.buys[c.buys.length - 1].d : '';
+    c.days = c.last ? diffDays(c.last, t) : null;
+    c.ticket = c.F ? r2(c.total / c.F) : 0;
+    c.balance = r2(c.buys.reduce(function(n, b){ return n + (b.bal || 0); }, 0));
+    c.credits = c.buys.filter(function(b){ return b.bal > 0; });
+    c.overdue = c.credits.filter(function(b){ return b.due && b.due < t; });
+    c.topCat = Object.keys(c.cat).sort(function(a, b){ return c.cat[b] - c.cat[a]; }).slice(0, 3);
+    c.log = (logBy[c.key] || []).sort(function(a, b){ return b.d.localeCompare(a.d); });
+    if (pts) {
+      c.earned = c.buys.reduce(function(n, b){ return b.d >= pts.start ? n + Math.floor(b.paid * pts.rate) : n; }, 0);
+      c.mov = (movBy[c.key] || []).sort(function(a, b){ return b.d.localeCompare(a.d); });
+      c.points = Math.max(0, c.earned + c.mov.reduce(function(n, m){ return n + m.p; }, 0));
+    } else { c.points = 0; c.mov = []; }
+  });
+  // RFM: recencia y frecuencia con umbrales fijos; monto por quintiles
+  var buyers = list.filter(function(c){ return c.F; });
+  var totals = buyers.map(function(c){ return c.total; }).sort(function(a, b){ return a - b; });
+  buyers.forEach(function(c){
+    c.R = rScore(c.days); c.Fs = fScore(c.F);
+    var pos = totals.indexOf(c.total);
+    c.Ms = Math.min(5, 1 + Math.floor(5 * pos / Math.max(1, totals.length)));
+  });
+  list.forEach(function(c){ c.seg = segmentOf(c); });
+  C = list; byKey = {}; list.forEach(function(c){ byKey[c.key] = c; });
+  render();
+}
+
+/* ============ WhatsApp ============ */
+function waNumber(phone){
+  var d = digits(phone); if (!d) return '';
+  if (d.length === 10 && d[0] === '0') d = '593' + d.slice(1);
+  else if (d.length === 9 && d[0] === '9') d = '593' + d;
+  return d.length >= 10 ? d : '';
+}
+function fill(text, c){
+  var pts = S.crm.pts && S.crm.pts.on ? S.crm.pts : null;
+  var due = c.credits && c.credits.length ? c.credits.map(function(b){ return b.due; }).sort()[0] : '';
+  return text.replace(/\{nombre\}/g, first(c.name) || 'hola')
+    .replace(/\{saldo\}/g, money(c.balance))
+    .replace(/\{vence\}/g, due ? (due < today() ? ', que venció el ' + fmt(due) : ', que vence el ' + fmt(due)) : '')
+    .replace(/\{puntos\}/g, String(c.points || 0))
+    .replace(/\{valor\}/g, pts ? money(Math.floor((c.points || 0) / pts.need) * pts.val) : '$0.00')
+    .replace(/\{categoria\}/g, (c.topCat && c.topCat[0] ? c.topCat[0] : 'ropa').toLowerCase());
+}
+// Botón de WhatsApp: los mensajes promocionales exigen consentimiento (Ley Orgánica de Protección de Datos)
+function waBtn(c, type, label, taskId){
+  var n = waNumber(c.phone);
+  if (!n) return '<button type="button" class="lnk" data-open="' + esc(c.key) + '" data-focus="phone">+ Celular</button>';
+  var m = MSG[type], need = m.mk && S.crm.cfg.consent;
+  if (need && c.ok === 'no') return '<span class="pill" title="Pidió no recibir promociones">No desea promos</span>';
+  if (need && c.ok !== 'si') type = 'permiso';
+  var url = 'https://wa.me/' + n + '?text=' + encodeURIComponent(fill(type === 'libre' ? MSG.libre.t : tpl(type), c));
+  var lbl = type === 'permiso' && m.mk ? 'Pedir permiso' : (label || MSG[type].l);
+  return '<a class="wa' + (type === 'permiso' ? ' ask' : '') + '" target="_blank" rel="noopener" href="' + esc(url) + '" data-wa="' + esc(c.key) + '" data-type="' + type + '"' + (taskId ? ' data-task="' + esc(taskId) + '"' : '') + '>💬 <span class="l">' + esc(lbl) + '</span></a>';
+}
+function logContact(k, type, taskId){
+  var d = today(), by = me(), c = byKey[k];
+  mutate(function(st){
+    st.crm.log.push({k: k, t: type, d: d, by: by});
+    if (st.crm.log.length > 3000) st.crm.log = st.crm.log.slice(-3000);
+    if (type === 'react' && c) Object.keys(c.names || {}).concat([k]).forEach(function(x){ st.contacted[x] = d; });
+    if (type === 'permiso' && st.crm.prof) { var p = st.crm.prof[k] = st.crm.prof[k] || {}; if (!p.ok) p.okAsk = d; }
+    if (taskId) st.crm.tasks.forEach(function(x){ if (x.id === taskId) { x.done = d; x.doneBy = by; } });
+  }, 'Contacto registrado');
+}
+function lastLog(c, type){ for (var i = 0; i < c.log.length; i++) if (c.log[i].t === type) return c.log[i].d; return ''; }
+
+/* ============ Seguimiento del día ============ */
+function nextBirthday(b, t){
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(b || ''); if (!m) return null;
+  var y = Number(t.slice(0, 4)), md = (m[2] === '02' && m[3] === '29') ? '02-28' : m[2] + '-' + m[3];
+  var n = y + '-' + md; if (n < t) n = (y + 1) + '-' + md;
+  return {d: n, days: diffDays(t, n), age: Number(n.slice(0, 4)) - Number(m[1])};
+}
+function followUps(){
+  var t = today(), g = {tasks: [], cobro: [], bday: [], post: [], nuevo: [], react: [], noPhone: 0};
+  S.crm.tasks.forEach(function(x){ if (x.done) return; var c = byKey[resolve(x.k)]; if (!c) return; if (x.due <= t) g.tasks.push({c: c, task: x}); });
+  C.forEach(function(c){
+    if (c.balance > 0) {
+      var due = c.credits.map(function(b){ return b.due; }).sort()[0] || t, ld = lastLog(c, 'cobro');
+      if (diffDays(t, due) <= 2 && (!ld || diffDays(ld, t) >= 3)) g.cobro.push({c: c, due: due});
+    }
+    var bd = nextBirthday(c.birthday, t), lb = lastLog(c, 'bday');
+    if (bd && bd.days <= 7 && (!lb || diffDays(lb, t) > 20)) g.bday.push({c: c, bd: bd});
+    var lastApp = null; c.buys.forEach(function(b){ if (b.src === 'a') lastApp = b; });
+    if (lastApp) { var dd = diffDays(lastApp.d, t), lp = lastLog(c, 'post'); if (dd >= 2 && dd <= 6 && (!lp || lp < lastApp.d)) g.post.push({c: c, b: lastApp, dd: dd}); }
+    var hasWa = !!waNumber(c.phone);
+    if (c.F === 1 && c.days >= 10 && c.days <= 25 && !lastLog(c, 'nuevo')) { if (hasWa) g.nuevo.push({c: c}); else g.noPhone++; }
+    if ((c.seg === 'riesgo' || c.seg === 'dorm') && c.ok !== 'no') { var lr = lastLog(c, 'react') || S.contacted[c.key]; if (!lr || diffDays(lr, t) >= 30) { if (hasWa) g.react.push({c: c}); else g.noPhone++; } }
+  });
+  g.cobro.sort(function(a, b){ return a.due.localeCompare(b.due); });
+  g.bday.sort(function(a, b){ return a.bd.days - b.bd.days; });
+  g.react.sort(function(a, b){ return b.c.total - a.c.total; }); g.react = g.react.slice(0, 12);
+  g.tasks.sort(function(a, b){ return a.task.due.localeCompare(b.task.due); });
+  return g;
+}
+function rowName(c, extra){ return '<td><button type="button" class="lnk" style="border:0;padding:0;background:none;font-size:14px;text-align:left" data-open="' + esc(c.key) + '"><span class="name">' + esc(c.name || 'Sin nombre') + '</span></button><span class="meta">' + extra + '</span></td>'; }
+function doneBtn(c, type, taskId){ return '<button type="button" class="lnk" data-done="' + esc(c.key) + '" data-type="' + type + '"' + (taskId ? ' data-task="' + esc(taskId) + '"' : '') + ' title="Marcar como hecho sin enviar mensaje">✓</button>'; }
+function group(title, pill, rows, empty){
+  return '<div class="grp"><h3>' + title + ' <span class="pill">' + rows.length + '</span>' + (pill || '') + '</h3>' + (rows.length ? '<div class="tw"><table><tbody>' + rows.join('') + '</tbody></table></div>' : '<p class="empty">' + empty + '</p>') + '</div>';
+}
+function renderSeg(){
+  var g = followUps(), t = today();
+  var n = g.tasks.length + g.cobro.length + g.bday.length + g.post.length + g.nuevo.length + g.react.length;
+  $('nSeg').textContent = n;
+  var h = '<div class="two"><div class="panel"><div class="head"><div><h2>Contactos sugeridos</h2><p class="sub">' + fmt(t, {weekday: 'long', day: 'numeric', month: 'long'}) + ' · ' + plural(n, 'contacto') + ' sugerido' + (n === 1 ? '' : 's') + '. Al tocar WhatsApp queda registrado.</p></div><button type="button" class="btn sm" id="newTask">+ Tarea</button></div>';
+  h += group('📌 Tareas', '', g.tasks.map(function(x){ var late = diffDays(x.task.due, t);
+    return '<tr>' + rowName(x.c, esc(x.task.text) + (late > 0 ? ' · <b style="color:#a1452f">atrasada ' + plural(late, 'día') + '</b>' : '')) + '<td class="num"><div class="acts">' + waBtn(x.c, 'libre', 'Escribir', x.task.id) + '<button type="button" class="lnk" data-snooze="' + esc(x.task.id) + '">+3 días</button>' + doneBtn(x.c, 'tarea', x.task.id) + '</div></td></tr>'; }), 'Sin tareas pendientes.');
+  h += group('💳 Cobros', '', g.cobro.map(function(x){ var late = diffDays(x.due, t);
+    return '<tr>' + rowName(x.c, 'Saldo <b>' + money(x.c.balance) + '</b> · ' + (late > 0 ? '<b style="color:#a1452f">vencido hace ' + plural(late, 'día') + '</b>' : late === 0 ? 'vence hoy' : 'vence ' + fmt(x.due))) + '<td class="num"><div class="acts">' + waBtn(x.c, 'cobro') + doneBtn(x.c, 'cobro') + '</div></td></tr>'; }), 'No hay créditos vencidos ni por vencer.');
+  h += group('🎂 Cumpleaños (7 días)', '', g.bday.map(function(x){
+    return '<tr>' + rowName(x.c, (x.bd.days === 0 ? '<b>¡Hoy!</b>' : x.bd.days === 1 ? 'Mañana' : fmt(x.bd.d, {weekday: 'long', day: 'numeric'})) + (x.bd.age > 0 && x.bd.age < 110 ? ' · cumple ' + x.bd.age : '')) + '<td class="num"><div class="acts">' + waBtn(x.c, 'bday', 'Felicitar') + doneBtn(x.c, 'bday') + '</div></td></tr>'; }), 'Nadie cumple años esta semana.');
+  h += group('🛍️ Post-venta', '', g.post.map(function(x){
+    return '<tr>' + rowName(x.c, 'Compró hace ' + plural(x.dd, 'día') + ' · ' + money(x.b.amt)) + '<td class="num"><div class="acts">' + waBtn(x.c, 'post', 'Preguntar') + doneBtn(x.c, 'post') + '</div></td></tr>'; }), 'Sin compras recientes para dar seguimiento.');
+  h += group('✨ Segunda compra', '', g.nuevo.map(function(x){
+    return '<tr>' + rowName(x.c, 'Primera compra hace ' + plural(x.c.days, 'día') + (x.c.topCat[0] ? ' · ' + esc(x.c.topCat[0]) : '')) + '<td class="num"><div class="acts">' + waBtn(x.c, 'nuevo', 'Invitar') + doneBtn(x.c, 'nuevo') + '</div></td></tr>'; }), 'Sin clientas nuevas por motivar.');
+  h += group('💌 Reactivar', ' <span class="sub" style="margin:0;font-size:12px">En riesgo y dormidas, mayor gasto primero</span>', g.react.map(function(x){
+    return '<tr>' + rowName(x.c, '<span class="pill ' + SEG[x.c.seg].c + '">' + SEG[x.c.seg].n + '</span> ' + plural(x.c.days, 'día') + ' sin comprar · ' + money(x.c.total)) + '<td class="num"><div class="acts">' + waBtn(x.c, 'react', 'Escribir') + doneBtn(x.c, 'react') + '</div></td></tr>'; }), 'Nadie para reactivar hoy.');
+  if (g.noPhone) h += '<div class="banner warn" style="margin:4px 0 0"><span>📱 Hay ' + plural(g.noPhone, 'clienta') + ' para reactivar o motivar que no tienen celular registrado. Agrégalo en su ficha para poder escribirles.</span><button type="button" class="btn sm sec" data-f="nophone" data-gocli>Ver lista</button></div>';
+  h += '</div><div>';
+  // Próximas tareas
+  var up = S.crm.tasks.filter(function(x){ return !x.done && x.due > t && byKey[resolve(x.k)]; }).sort(function(a, b){ return a.due.localeCompare(b.due); }).slice(0, 15);
+  h += '<div class="panel"><h2>Próximas tareas</h2>' + (up.length ? '<table><tbody>' + up.map(function(x){ var c = byKey[resolve(x.k)]; return '<tr>' + rowName(c, esc(x.text)) + '<td class="num">' + fmt(x.due, {weekday: 'short', day: 'numeric', month: 'short'}) + '</td></tr>'; }).join('') + '</tbody></table>' : '<p class="empty">Programa llamadas o mensajes con “+ Tarea”, por ejemplo avisar cuando llegue una talla.</p>') + '</div>';
+  // Actividad reciente
+  var recent = S.crm.log.slice(-12).reverse();
+  h += '<div class="panel"><h2>Actividad reciente</h2>' + (recent.length ? '<table><tbody>' + recent.map(function(l){ var c = byKey[resolve(l.k)]; return '<tr><td><span class="name">' + esc(c ? c.name : '—') + '</span><span class="meta">' + esc((MSG[l.t] && MSG[l.t].l) || (l.t === 'tarea' ? 'Tarea' : l.t)) + (l.by ? ' · ' + esc(l.by.split('@')[0]) : '') + '</span></td><td class="num">' + fmt(l.d) + '</td></tr>'; }).join('') + '</tbody></table>' : '<p class="empty">Aquí verás a quién se le escribió y quién lo hizo.</p>') + '</div>';
+  // Plantillas
+  h += '<div class="panel tpl"><details><summary>Editar mensajes de WhatsApp</summary><p class="sub">Puedes usar {nombre}, {saldo}, {vence}, {puntos}, {valor} y {categoria}.</p>' +
+    MSG_EDIT.map(function(k){ return '<label>' + MSG[k].l + '<textarea data-tpl="' + k + '">' + esc(tpl(k)) + '</textarea></label>'; }).join('') +
+    '<label style="display:flex;gap:8px;align-items:center;margin-top:14px;font-weight:600"><input type="checkbox" id="cfgConsent"' + (S.crm.cfg.consent ? ' checked' : '') + '> Pedir permiso antes de enviar promociones (recomendado por la Ley de Protección de Datos)</label></details></div>';
+  h += '</div></div>';
+  $('v-seg').innerHTML = h;
+  $('newTask').onclick = function(){ taskDialog(null); };
+}
+
+/* ============ Lista de clientes ============ */
+function dupPairs(){
+  var tok = function(n){ return norm(n).replace(/z/g, 's').replace(/ll/g, 'y').replace(/(.)\1/g, '$1').split(' ').filter(Boolean); };
+  var nd = {}; S.crm.nodup.forEach(function(x){ nd[x] = 1; });
+  var out = [], L = C.map(function(c){ return {c: c, t: tok(c.name), ph: phoneKey(c.phone), ci: digits(c.cedula)}; });
+  for (var i = 0; i < L.length; i++) for (var j = i + 1; j < L.length; j++) {
+    var a = L[i], b = L[j], why = '';
+    if (a.ph && a.ph === b.ph) why = 'mismo celular';
+    else if (a.ci.length >= 6 && a.ci === b.ci) why = 'misma cédula';
+    else if (a.t.length && b.t.length && a.t[0] === b.t[0]) {
+      var s = a.t.length <= b.t.length ? a : b, l = s === a ? b : a;
+      if (s.t.every(function(x){ return l.t.indexOf(x) >= 0; })) why = s.t.length === l.t.length ? 'mismo nombre' : 'nombre parecido';
+    }
+    if (!why) continue;
+    var id = [a.c.key, b.c.key].sort().join('|'); if (nd[id]) continue;
+    out.push({a: a.c, b: b.c, why: why, id: id});
+  }
+  return out;
+}
+function renderCli(){
+  $('nCli').textContent = C.filter(function(c){ return c.F; }).length;
+  var q = norm(cliQuery), list = C.filter(function(c){
+    if (cliFilter === 'debe' && !(c.balance > 0)) return false;
+    if (cliFilter === 'nophone' && waNumber(c.phone)) return false;
+    if (cliFilter === 'perm' && c.ok !== 'si') return false;
+    if (SEG[cliFilter] && c.seg !== cliFilter) return false;
+    if (q && (norm(c.name) + ' ' + digits(c.phone) + ' ' + digits(c.cedula) + ' ' + norm(c.tags.join(' '))).indexOf(q) < 0) return false;
+    return true;
+  });
+  var sorters = {total: function(a, b){ return b.total - a.total; }, last: function(a, b){ return String(b.last).localeCompare(String(a.last)); }, name: function(a, b){ return norm(a.name).localeCompare(norm(b.name)); }, pts: function(a, b){ return b.points - a.points || b.total - a.total; }};
+  list.sort(sorters[cliSort] || sorters.total);
+  var counts = {}; C.forEach(function(c){ counts[c.seg] = (counts[c.seg] || 0) + 1; });
+  var chips = [['all', 'Todas', C.length]].concat(SEG_ORDER.filter(function(k){ return counts[k]; }).map(function(k){ return [k, SEG[k].n, counts[k]]; }))
+    .concat([['debe', 'Con saldo', C.filter(function(c){ return c.balance > 0; }).length], ['perm', 'Aceptan promos', C.filter(function(c){ return c.ok === 'si'; }).length], ['nophone', 'Sin celular', C.filter(function(c){ return !waNumber(c.phone); }).length]]);
+  var h = '';
+  var dups = dupPairs();
+  if (dups.length) h += '<div class="panel"><details><summary>🔗 ' + plural(dups.length, 'posible cliente repetido', 'posibles clientes repetidos') + ' — revisar</summary><p class="sub">El historial guardó a algunas personas con nombres distintos. Si son la misma, únelas para ver todas sus compras juntas.</p><div class="tw"><table><tbody>' +
+    dups.slice(0, 40).map(function(d){ return '<tr><td><span class="name">' + esc(d.a.name) + '</span><span class="meta">' + plural(d.a.F, 'compra') + ' · ' + money(d.a.total) + '</span></td><td><span class="name">' + esc(d.b.name) + '</span><span class="meta">' + plural(d.b.F, 'compra') + ' · ' + money(d.b.total) + '</span></td><td><span class="pill">' + d.why + '</span></td><td class="num"><div class="acts"><button type="button" class="btn sm" data-merge="' + esc(d.id) + '">Unir</button><button type="button" class="lnk" data-nodup="' + esc(d.id) + '">Son distintas</button></div></td></tr>'; }).join('') + '</tbody></table></div></details></div>';
+  h += '<div class="panel"><div class="tools"><input type="search" id="q" placeholder="Buscar por nombre, celular, cédula o etiqueta" value="' + esc(cliQuery) + '"><select id="sort" aria-label="Ordenar"><option value="total">Mayor gasto</option><option value="last">Compra más reciente</option><option value="name">Nombre A-Z</option>' + (S.crm.pts && S.crm.pts.on ? '<option value="pts">Más puntos</option>' : '') + '</select><button type="button" class="btn sm" id="newCli">+ Nueva</button><button type="button" class="btn sm line" id="csv">Exportar</button></div>' +
+    '<div class="chips">' + chips.map(function(x){ return '<button type="button" class="chip' + (cliFilter === x[0] ? ' on' : '') + '" data-f="' + x[0] + '">' + esc(x[1]) + ' · ' + x[2] + '</button>'; }).join('') + '</div>' +
+    '<p class="sub" style="margin:0 0 6px">' + plural(list.length, 'cliente') + ' · ' + money(list.reduce(function(n, c){ return n + c.total; }, 0)) + ' en compras</p>' +
+    (list.length ? '<div class="tw"><table><thead><tr><th>Cliente</th><th>Segmento</th><th class="num hide-m">Compras</th><th class="num">Total</th><th class="num hide-m">Última</th><th class="num hide-m">Saldo</th>' + (S.crm.pts && S.crm.pts.on ? '<th class="num hide-m">Puntos</th>' : '') + '</tr></thead><tbody>' +
+      list.slice(0, 300).map(function(c){ return '<tr class="row-click" data-open="' + esc(c.key) + '"><td><span class="name">' + esc(c.name || 'Sin nombre') + '</span><span class="meta">' + esc(c.phone || 'sin celular') + (c.ok === 'si' ? ' · ✓ promos' : '') + (c.tags.length ? ' · ' + esc(c.tags.join(', ')) : '') + '</span></td><td><span class="pill ' + SEG[c.seg].c + '">' + SEG[c.seg].n + '</span></td><td class="num hide-m">' + c.F + '</td><td class="num"><b>' + money(c.total) + '</b></td><td class="num hide-m">' + (c.last ? fmt(c.last) + '<span class="meta">hace ' + plural(c.days, 'día') + '</span>' : '—') + '</td><td class="num hide-m">' + (c.balance ? '<b style="color:#a1452f">' + money(c.balance) + '</b>' : '—') + '</td>' + (S.crm.pts && S.crm.pts.on ? '<td class="num hide-m">' + c.points + '</td>' : '') + '</tr>'; }).join('') + '</tbody></table></div>' : '<p class="empty">No hay clientes con ese filtro.</p>') + '</div>';
+  $('v-cli').innerHTML = h;
+  $('sort').value = cliSort;
+  var qi = $('q');
+  qi.oninput = function(){ cliQuery = qi.value; var pos = qi.selectionStart; renderCli(); var n = $('q'); n.focus(); try { n.setSelectionRange(pos, pos); } catch(_){} };
+  $('sort').onchange = function(){ cliSort = this.value; renderCli(); };
+  $('newCli').onclick = newClient;
+  $('csv').onclick = exportCsv;
+}
+
+/* ============ Segmentos ============ */
+function renderRfm(){
+  var buyers = C.filter(function(c){ return c.F; }), tot = buyers.reduce(function(n, c){ return n + c.total; }, 0) || 1;
+  var agg = {}; SEG_ORDER.forEach(function(k){ agg[k] = {n: 0, m: 0, f: 0, d: 0}; });
+  C.forEach(function(c){ var a = agg[c.seg]; a.n++; a.m += c.total; a.f += c.F; a.d += c.days || 0; });
+  var h = '<div class="panel"><div class="head"><div><h2>Segmentos de clientes (RFM)</h2><p class="sub">Cada clienta se califica por <b>R</b>ecencia (días desde la última compra: ≤15, ≤30, ≤60, ≤90, más), <b>F</b>recuencia (días distintos con compra: 1, 2, 3, 4–5, 6+) y <b>M</b>onto (quintiles del gasto total). Se recalcula con cada venta.</p></div></div><div class="segs">' +
+    SEG_ORDER.filter(function(k){ return agg[k].n; }).map(function(k){ var a = agg[k], sh = a.m / tot * 100;
+      return '<div class="sc"><div class="top"><span class="pill ' + SEG[k].c + '">' + SEG[k].n + '</span><b class="big">' + a.n + '</b></div><p>' + SEG[k].d + '</p>' +
+        (k !== 'lead' ? '<div class="bar"><i style="width:' + Math.max(2, sh).toFixed(1) + '%"></i></div><p><b>' + sh.toFixed(0) + '%</b> de las ventas · ticket ' + money(a.f ? a.m / a.f : 0) + ' · ' + Math.round(a.d / a.n) + ' días sin comprar en promedio</p>' : '') +
+        '<div class="do">👉 ' + SEG[k].a + '</div><button type="button" class="btn sm sec" data-goseg="' + k + '">Ver ' + plural(a.n, 'clienta') + '</button></div>'; }).join('') + '</div></div>';
+  // Matriz R x F
+  var grid = {}; buyers.forEach(function(c){ var k = c.R + '-' + c.Fs; grid[k] = (grid[k] || 0) + 1; });
+  var mx = Math.max.apply(null, Object.keys(grid).map(function(k){ return grid[k]; }).concat([1]));
+  var rl = ['', '+90 d', '61–90', '31–60', '16–30', '≤15 d'], fl = ['', '1', '2', '3', '4–5', '6+'];
+  h += '<div class="two"><div class="panel"><h2>Matriz recencia × frecuencia</h2><p class="sub">Número de clientas en cada combinación. Arriba a la derecha están las mejores; abajo a la derecha, las que hay que recuperar.</p><div class="tw"><table class="heat"><tbody>';
+  for (var r = 5; r >= 1; r--) {
+    h += '<tr><th style="text-align:right">' + rl[r] + '</th>';
+    for (var f = 1; f <= 5; f++) { var v = grid[r + '-' + f] || 0, a = v ? 0.12 + 0.88 * v / mx : 0; h += '<td style="background:' + (v ? 'rgba(168,97,123,' + a.toFixed(2) + ')' : '#f6eff2') + ';color:' + (a > 0.55 ? '#fff' : '#6b3d50') + '">' + (v || '') + '</td>'; }
+    h += '</tr>';
+  }
+  h += '<tr><th></th>' + [1, 2, 3, 4, 5].map(function(f){ return '<th>' + fl[f] + '</th>'; }).join('') + '</tr></tbody></table></div><p class="sub">Filas: días desde la última compra · Columnas: número de compras.</p></div>';
+  // Indicadores
+  var rep = buyers.filter(function(c){ return c.F >= 2; }).length, act = buyers.filter(function(c){ return c.days <= 60; }).length;
+  var top20 = buyers.slice().sort(function(a, b){ return b.total - a.total; }).slice(0, Math.max(1, Math.round(buyers.length * 0.2))).reduce(function(n, c){ return n + c.total; }, 0);
+  var cats = {}; buyers.forEach(function(c){ Object.keys(c.cat).forEach(function(k){ cats[k] = (cats[k] || 0) + c.cat[k]; }); });
+  var catL = Object.keys(cats).sort(function(a, b){ return cats[b] - cats[a]; }).slice(0, 6), cm = catL.length ? cats[catL[0]] : 1;
+  h += '<div class="panel"><h2>Indicadores de la cartera</h2><table><tbody>' +
+    '<tr><td>Tasa de recompra</td><td class="num"><b>' + (buyers.length ? Math.round(rep / buyers.length * 100) : 0) + '%</b><span class="meta">' + rep + ' de ' + buyers.length + ' compraron 2+ veces</span></td></tr>' +
+    '<tr><td>Clientas activas (60 días)</td><td class="num"><b>' + act + '</b><span class="meta">' + (buyers.length ? Math.round(act / buyers.length * 100) : 0) + '% de la cartera</span></td></tr>' +
+    '<tr><td>Peso del 20% que más compra</td><td class="num"><b>' + Math.round(top20 / tot * 100) + '%</b><span class="meta">de todas las ventas</span></td></tr>' +
+    '<tr><td>Ticket promedio por visita</td><td class="num"><b>' + money(tot / Math.max(1, buyers.reduce(function(n, c){ return n + c.F; }, 0))) + '</b></td></tr>' +
+    '<tr><td>Valor promedio por clienta</td><td class="num"><b>' + money(tot / Math.max(1, buyers.length)) + '</b></td></tr>' +
+    '<tr><td>Con celular para WhatsApp</td><td class="num"><b>' + C.filter(function(c){ return waNumber(c.phone); }).length + '</b><span class="meta">de ' + C.length + '</span></td></tr>' +
+    '<tr><td>Aceptan promociones</td><td class="num"><b>' + C.filter(function(c){ return c.ok === 'si'; }).length + '</b></td></tr>' +
+    '</tbody></table>' + (catL.length ? '<h3 style="margin-top:16px">Categorías más compradas (unidades)</h3>' + catL.map(function(k){ return '<div style="margin:7px 0;font-size:13px"><div style="display:flex;justify-content:space-between"><span>' + esc(k) + '</span><b>' + cats[k] + '</b></div><div class="bar"><i style="width:' + (cats[k] / cm * 100).toFixed(0) + '%"></i></div></div>'; }).join('') : '') + '</div></div>';
+  $('v-rfm').innerHTML = h;
+}
+
+/* ============ Fidelidad ============ */
+function renderPts(){
+  var p = S.crm.pts, h = '';
+  if (!p || !p.on) {
+    h = '<div class="panel"><h2>Programa de puntos</h2><p class="sub">Cada compra pagada suma puntos que la clienta canjea como descuento. Los puntos se calculan solos con las ventas; aquí solo se registran los canjes.</p>' +
+      '<div class="fgrid" style="margin:14px 0"><label class="fld">Puntos por cada $1 pagado<input id="pRate" type="number" min="0.1" step="0.1" value="' + (p ? p.rate : 1) + '"></label>' +
+      '<label class="fld">Puntos para canjear<input id="pNeed" type="number" min="1" step="1" value="' + (p ? p.need : 100) + '"></label>' +
+      '<label class="fld">Descuento por canje ($)<input id="pVal" type="number" min="0.5" step="0.5" value="' + (p ? p.val : 5) + '"></label>' +
+      '<label class="fld">Contar compras desde<input id="pStart" type="date" value="' + (p ? p.start : today()) + '"></label></div>' +
+      '<p class="sub" id="pPrev"></p><button type="button" class="btn" id="pOn">Activar programa</button></div>';
+    $('v-pts').innerHTML = h;
+    var prev = function(){ var rate = Number($('pRate').value) || 0, need = Number($('pNeed').value) || 1, val = Number($('pVal').value) || 0, st = $('pStart').value;
+      var pct = rate * val / need * 100, iss = C.reduce(function(n, c){ return n + c.buys.reduce(function(m, b){ return b.d >= st ? m + Math.floor(b.paid * rate) : m; }, 0); }, 0);
+      $('pPrev').innerHTML = 'Equivale a devolver <b>' + pct.toFixed(1) + '%</b> de lo que compra cada clienta. Con la fecha elegida se entregarían <b>' + iss.toLocaleString('es-EC') + ' puntos</b> (hasta ' + money(iss / need * val) + ' en descuentos).'; };
+    ['pRate', 'pNeed', 'pVal', 'pStart'].forEach(function(id){ $(id).oninput = prev; }); prev();
+    $('pOn').onclick = function(){ var cfg = {on: true, rate: Number($('pRate').value) || 1, need: Math.max(1, Math.round(Number($('pNeed').value) || 100)), val: Number($('pVal').value) || 5, start: $('pStart').value || today()};
+      mutate(function(st){ st.crm.pts = Object.assign(st.crm.pts || {mov: []}, cfg); st.crm.pts.mov = st.crm.pts.mov || []; }, 'Programa de puntos activado'); };
+    return;
+  }
+  var list = C.filter(function(c){ return c.points > 0; }).sort(function(a, b){ return b.points - a.points; });
+  var tot = list.reduce(function(n, c){ return n + c.points; }, 0), ready = list.filter(function(c){ return c.points >= p.need; });
+  var redeemed = p.mov.filter(function(m){ return m.p < 0; }).reduce(function(n, m){ return n - m.p; }, 0);
+  h = '<div class="panel"><div class="head"><div><h2>Programa de puntos</h2><p class="sub">' + p.rate + ' punto' + (p.rate === 1 ? '' : 's') + ' por cada $1 pagado · ' + p.need + ' puntos = ' + money(p.val) + ' de descuento · desde el ' + fmtY(p.start) + '</p></div><button type="button" class="btn sm line" id="pEdit">Cambiar reglas</button></div>' +
+    '<div class="kpis"><div class="kpi"><small>Puntos vigentes</small><strong>' + tot.toLocaleString('es-EC') + '</strong><span>≈ ' + money(Math.floor(tot / p.need) * p.val) + ' en descuentos</span></div><div class="kpi"><small>Pueden canjear ya</small><strong>' + ready.length + '</strong><span>con ' + p.need + '+ puntos</span></div><div class="kpi"><small>Puntos canjeados</small><strong>' + redeemed.toLocaleString('es-EC') + '</strong></div><div class="kpi"><small>Clientas con puntos</small><strong>' + list.length + '</strong></div></div></div>';
+  h += '<div class="panel"><h2>Saldo por clienta</h2>' + (list.length ? '<div class="tw"><table><thead><tr><th>Cliente</th><th class="num">Puntos</th><th class="num hide-m">Equivale</th><th></th></tr></thead><tbody>' +
+    list.slice(0, 200).map(function(c){ return '<tr>' + rowName(c, money(c.total) + ' comprados') + '<td class="num"><b>' + c.points + '</b></td><td class="num hide-m">' + money(Math.floor(c.points / p.need) * p.val) + '</td><td class="num"><div class="acts">' + waBtn(c, 'puntos', 'Avisar') + '<button type="button" class="btn sm" data-redeem="' + esc(c.key) + '"' + (c.points < p.need ? ' disabled' : '') + '>Canjear</button></div></td></tr>'; }).join('') + '</tbody></table></div>' : '<p class="empty">Aún no hay puntos. Se suman solos con cada venta pagada desde el ' + fmtY(p.start) + '.</p>') + '</div>';
+  $('v-pts').innerHTML = h;
+  $('pEdit').onclick = function(){ mutate(function(st){ st.crm.pts.on = false; }, 'Edita las reglas y vuelve a activar'); };
+}
+async function redeem(k){
+  var c = byKey[k], p = S.crm.pts; if (!c || !p) return;
+  var blocks = Math.floor(c.points / p.need); if (!blocks) return;
+  var n = 1;
+  if (blocks > 1) { var a = await promptBox(c.name + ' tiene ' + c.points + ' puntos (' + blocks + ' canjes de ' + money(p.val) + ').\n¿Cuántos canjes aplica hoy?'); if (a == null) return; n = Math.max(1, Math.min(blocks, Math.round(Number(a) || 1))); }
+  if (!(await confirmBox('Canjear ' + (n * p.need) + ' puntos de ' + c.name + ' por ' + money(n * p.val) + ' de descuento.\n\nAplica el descuento en el precio al registrar la venta.'))) return;
+  var m = {id: uid(), k: k, d: today(), p: -n * p.need, m: 'Canje ' + money(n * p.val), by: me()};
+  mutate(function(st){ st.crm.pts.mov.push(m); }, 'Canje registrado');
+}
+
+/* ============ Ficha 360° ============ */
+function openClient(k, focus){
+  var c = byKey[resolve(k)]; if (!c) return;
+  openKey = c.key;
+  var ov = $('ficha') || document.createElement('div'); ov.id = 'ficha'; ov.className = 'ov';
+  var t = today(), p = S.crm.pts && S.crm.pts.on ? S.crm.pts : null, bd = nextBirthday(c.birthday, t);
+  var aliasOf = Object.keys(S.crm.alias).filter(function(x){ return S.crm.alias[x] === c.key; });
+  var h = '<div class="drawer" role="dialog" aria-modal="true" aria-label="Ficha de ' + esc(c.name) + '"><button type="button" class="x" data-close aria-label="Cerrar">×</button>' +
+    '<div class="fhead"><small style="color:#8a6f7a">FICHA DE CLIENTE</small><h2>' + esc(c.name || 'Sin nombre') + '</h2><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill ' + SEG[c.seg].c + '">' + SEG[c.seg].n + '</span>' +
+    (c.ok === 'si' ? '<span class="pill c-nueva">✓ Acepta promociones</span>' : c.ok === 'no' ? '<span class="pill c-perd">No desea promociones</span>' : '<span class="pill c-prom">Sin permiso para promociones</span>') +
+    c.tags.map(function(x){ return '<span class="pill">' + esc(x) + '</span>'; }).join('') + (bd && bd.days <= 30 ? '<span class="pill c-vip">🎂 ' + (bd.days === 0 ? 'hoy' : fmt(bd.d)) + '</span>' : '') + '</div>' +
+    '<div class="acts" style="justify-content:flex-start;margin-top:6px">' + waBtn(c, 'libre', 'WhatsApp') + (waNumber(c.phone) ? '<a class="lnk" href="tel:' + esc(digits(c.phone)) + '">📞 Llamar</a>' : '') + (c.balance ? waBtn(c, 'cobro', 'Cobrar') : '') + (p && c.points >= p.need ? '<button type="button" class="btn sm" data-redeem="' + esc(c.key) + '">Canjear puntos</button>' : '') + '<button type="button" class="lnk" data-task-for="' + esc(c.key) + '">+ Tarea</button></div></div>' +
+    '<div class="kpis"><div class="kpi"><small>Total comprado</small><strong>' + money(c.total) + '</strong><span>' + plural(c.F, 'compra') + ' · ' + plural(c.units, 'prenda') + '</span></div><div class="kpi"><small>Ticket promedio</small><strong>' + money(c.ticket) + '</strong><span>por visita</span></div>' +
+    '<div class="kpi"><small>Última compra</small><strong>' + (c.last ? (c.days === 0 ? 'Hoy' : c.days + ' d') : '—') + '</strong><span>' + (c.last ? fmtY(c.last) : 'aún no compra') + '</span></div>' +
+    (c.balance ? '<div class="kpi" style="border-color:#efc3c3"><small>Saldo a crédito</small><strong style="color:#a1452f">' + money(c.balance) + '</strong><span>' + (c.overdue.length ? 'vencido' : 'vence ' + fmt(c.credits.map(function(b){ return b.due; }).sort()[0])) + '</span></div>' : p ? '<div class="kpi"><small>Puntos</small><strong>' + c.points + '</strong><span>≈ ' + money(Math.floor(c.points / p.need) * p.val) + '</span></div>' : '<div class="kpi"><small>Cliente desde</small><strong style="font-size:18px">' + (c.first ? fmt(c.first, {month: 'short', year: 'numeric'}) : '—') + '</strong></div>') + '</div>';
+  // Datos
+  h += '<div class="panel"><div class="head"><h3 style="margin:0">Datos de contacto</h3><button type="button" class="btn sm" id="fSave">Guardar cambios</button></div><div class="fgrid">' +
+    '<label class="fld">Nombre<input id="fName" value="' + esc(c.name) + '"></label>' +
+    '<label class="fld">Celular<input id="fPhone" inputmode="tel" placeholder="09…" value="' + esc(c.phone) + '"></label>' +
+    '<label class="fld">Cédula<input id="fCed" inputmode="numeric" value="' + esc(c.cedula) + '"></label>' +
+    '<label class="fld">Correo<input id="fMail" type="email" value="' + esc(c.email) + '"></label>' +
+    '<label class="fld">Cumpleaños<input id="fBday" type="date" value="' + esc(c.birthday) + '"></label>' +
+    '<label class="fld">Promociones por WhatsApp<select id="fOk"><option value="">No se ha preguntado</option><option value="si"' + (c.ok === 'si' ? ' selected' : '') + '>Sí, aceptó</option><option value="no"' + (c.ok === 'no' ? ' selected' : '') + '>No desea</option></select></label>' +
+    '<label class="fld" style="grid-column:span 2">Dirección<input id="fAddr" value="' + esc(c.address) + '"></label>' +
+    '<label class="fld">Etiquetas<input id="fTags" placeholder="talla M, perfumes" value="' + esc(c.tags.join(', ')) + '"></label>' +
+    '<label class="fld" style="grid-column:1 / -1">Qué busca / preferencias<input id="fInt" placeholder="Ej. vestidos largos talla M, perfume dulce" value="' + esc(c.interest) + '"></label>' +
+    '</div>' + (c.okD ? '<p class="sub">Consentimiento registrado el ' + fmtY(c.okD) + '.</p>' : '') + '</div>';
+  // Preferencias + historial
+  var hist = c.buys.slice().reverse().slice(0, 40);
+  h += '<div class="cols"><div class="panel"><h3>Compras</h3>' + (c.topCat.length ? '<p class="sub" style="margin-top:0">Prefiere: <b>' + esc(c.topCat.join(', ')) + '</b></p>' : '') +
+    (hist.length ? '<ul class="hist">' + hist.map(function(b){
+      if (b.src === 'a') return '<li><b>' + fmtY(b.d) + '</b> · ' + money(b.amt) + (b.s.paymentType ? ' · ' + esc(b.s.paymentType) : '') + (b.bal ? ' · <b style="color:#a1452f">saldo ' + money(b.bal) + '</b>' : '') + '<span class="meta">' + itemsOf(b.s).map(function(i){ return esc((Number(i.quantity) || 1) + '× ' + (i.description || i.code || 'Producto')); }).join(' · ') + '</span></li>';
+      return '<li><b>' + fmtY(b.d) + '</b> · ' + money(b.amt) + ' · ' + plural(b.u, 'prenda') + (b.credit ? ' · crédito ' + money(b.credit) : '') + '<span class="meta">Historial (hoja Ventas)</span></li>'; }).join('') + '</ul>' : '<p class="empty">Aún no compra. Registra la venta en el módulo Ventas.</p>') +
+    (c.histCredit ? '<p class="sub">Crédito del historial: ' + money(c.histCredit) + ' (el archivo antiguo no registraba abonos).</p>' : '') + (c.pe ? '<p class="sub">Tenía ' + plural(c.pe, 'prenda') + ' “por entregar” en el historial.</p>' : '') + '</div>';
+  // Notas y seguimiento
+  var tasks = S.crm.tasks.filter(function(x){ return resolve(x.k) === c.key; }).sort(function(a, b){ return (a.done ? 1 : 0) - (b.done ? 1 : 0) || a.due.localeCompare(b.due); });
+  h += '<div><div class="panel"><h3>Notas</h3><div style="display:flex;gap:6px"><input id="fNote" style="flex:1;border:1px solid #d8bec8;border-radius:10px;padding:9px 11px;font:inherit;font-size:14px;min-height:42px" placeholder="Ej. le gustó la blusa verde, volver a avisar"><button type="button" class="btn sm" id="fAddNote">Agregar</button></div>' +
+    (c.notes.length ? c.notes.slice().reverse().map(function(n){ return '<div class="note">' + esc(n.t) + '<small>' + fmtY(n.d) + (n.by ? ' · ' + esc(n.by.split('@')[0]) : '') + '</small></div>'; }).join('') : '<p class="empty">Sin notas.</p>') + '</div>' +
+    '<div class="panel"><h3>Seguimiento</h3>' + (tasks.length ? '<table><tbody>' + tasks.map(function(x){ return '<tr' + (x.done ? ' style="opacity:.55"' : '') + '><td>' + esc(x.text) + '<span class="meta">' + (x.done ? 'Hecho ' + fmt(x.done) : 'Para el ' + fmt(x.due, {weekday: 'short', day: 'numeric', month: 'short'})) + '</span></td><td class="num">' + (x.done ? '' : doneBtn(c, 'tarea', x.id)) + '</td></tr>'; }).join('') + '</tbody></table>' : '<p class="empty">Sin tareas.</p>') +
+    (c.log.length ? '<h3 style="margin-top:12px">Contactos</h3><ul class="hist">' + c.log.slice(0, 10).map(function(l){ return '<li>' + fmtY(l.d) + ' · ' + esc((MSG[l.t] && MSG[l.t].l) || l.t) + (l.by ? '<span class="meta">' + esc(l.by.split('@')[0]) + '</span>' : '') + '</li>'; }).join('') + '</ul>' : '') + '</div>' +
+    (p ? '<div class="panel"><h3>Puntos: ' + c.points + '</h3><p class="sub">Ganados: ' + c.earned + ' desde el ' + fmtY(p.start) + '</p>' + (c.mov.length ? '<ul class="hist">' + c.mov.map(function(m){ return '<li>' + fmtY(m.d) + ' · ' + esc(m.m) + ' · <b>' + (m.p > 0 ? '+' : '') + m.p + '</b></li>'; }).join('') + '</ul>' : '') + '<button type="button" class="lnk" data-bonus="' + esc(c.key) + '">+ Puntos de regalo</button></div>' : '') +
+    '</div></div>';
+  // Unir / separar
+  h += '<div class="panel"><details><summary>Unir con otro registro de la misma persona</summary><p class="sub">Úsalo si la misma clienta aparece con dos nombres (ej. “Freya” y “Freya Pazmiño”). Sus compras se suman en esta ficha.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><input id="fMergeQ" list="fMergeL" placeholder="Escribe el otro nombre" style="flex:1;min-width:200px;border:1px solid #d8bec8;border-radius:10px;padding:9px 11px;font:inherit;min-height:42px"><datalist id="fMergeL">' +
+    C.filter(function(x){ return x.key !== c.key; }).map(function(x){ return '<option value="' + esc(x.name) + ' · ' + money(x.total) + '">'; }).join('') + '</datalist><button type="button" class="btn sm" id="fMerge">Unir</button></div>' +
+    (aliasOf.length ? '<p class="sub">Incluye registros unidos: ' + aliasOf.map(function(a){ return '<button type="button" class="lnk" data-unmerge="' + esc(a) + '">Separar ' + esc(aliasName(a)) + '</button>'; }).join(' ') + '</p>' : '') + '</details></div></div>';
+  ov.innerHTML = h; fichaDirty = false;
+  if (!ov.parentNode) document.body.appendChild(ov);
+  ov.oninput = function(e){ if (e.target.closest('.fgrid') || e.target.id === 'fNote') fichaDirty = true; };
+  document.body.style.overflow = 'hidden';
+  var g = function(id){ return ov.querySelector('#' + id); };
+  g('fSave').onclick = function(){
+    var ok = g('fOk').value, by = me(), d = today();
+    var patch = {name: g('fName').value.trim(), phone: g('fPhone').value.trim(), cedula: g('fCed').value.trim(), email: g('fMail').value.trim(), birthday: g('fBday').value, address: g('fAddr').value.trim(),
+      tags: g('fTags').value.split(',').map(function(x){ return x.trim(); }).filter(Boolean), interest: g('fInt').value.trim(), ok: ok};
+    var key = c.key, prevOk = c.ok;
+    mutate(function(st){ var pr = st.crm.prof[key] = st.crm.prof[key] || {}; Object.keys(patch).forEach(function(f){ pr[f] = patch[f]; }); if (ok !== prevOk) { pr.okD = ok ? d : ''; pr.okBy = ok ? by : ''; } }, 'Ficha guardada');
+    openClient(key);
+  };
+  g('fAddNote').onclick = function(){ var v = g('fNote').value.trim(); if (!v) return; var n = {t: v, d: today(), by: me()}, key = c.key;
+    mutate(function(st){ var pr = st.crm.prof[key] = st.crm.prof[key] || {}; pr.notes = (pr.notes || []).concat([n]); }, 'Nota guardada'); openClient(key); };
+  g('fNote').onkeydown = function(e){ if (e.key === 'Enter') g('fAddNote').click(); };
+  g('fMerge').onclick = async function(){
+    var v = g('fMergeQ').value.split(' · ')[0].trim(); var o = C.filter(function(x){ return x.key !== c.key && norm(x.name) === norm(v); })[0];
+    if (!o) { tip('No encontré a “' + v + '”. Elige un nombre de la lista.', 2500); return; }
+    if (!(await confirmBox('¿Unir “' + o.name + '” (' + money(o.total) + ') dentro de la ficha de “' + c.name + '”?\nSe podrá separar después.'))) return;
+    mergeInto(c.key, o.key);
+  };
+  if (focus) setTimeout(function(){ var e = g(focus === 'phone' ? 'fPhone' : focus); if (e) { e.focus(); e.scrollIntoView({block: 'center'}); } }, 60);
+}
+function aliasName(a){
+  var h = ((S.crm.hist && S.crm.hist.clientes) || []).filter(function(x){ return 'n' + norm(x.n) === a; })[0];
+  if (h) return h.n;
+  var p = S.crm.prof[a]; if (p && p.name) return p.name;
+  var s = sales.filter(function(x){ return rawKey(x) === a; })[0];
+  return s ? s.client : a.slice(1);
+}
+function closeClient(){ var o = $('ficha'); if (o) o.remove(); openKey = null; document.body.style.overflow = ''; }
+function mergeInto(keep, gone){
+  var pg = S.crm.prof[gone];
+  mutate(function(st){
+    st.crm.alias[gone] = keep;
+    Object.keys(st.crm.alias).forEach(function(x){ if (st.crm.alias[x] === gone) st.crm.alias[x] = keep; });
+    if (pg) { var pk = st.crm.prof[keep] = st.crm.prof[keep] || {};
+      ['phone', 'cedula', 'email', 'birthday', 'address', 'interest', 'ok', 'okD'].forEach(function(f){ if (!pk[f] && pg[f]) pk[f] = pg[f]; });
+      pk.notes = (pk.notes || []).concat(pg.notes || []); pk.tags = Array.from(new Set((pk.tags || []).concat(pg.tags || []))); }
+  }, 'Registros unidos');
+  if (openKey) openClient(keep);
+}
+
+/* ============ Diálogos ============ */
+function taskDialog(k){
+  var o = document.createElement('div'); o.className = 'ov'; o.style.justifyContent = 'center'; o.style.alignItems = 'center'; o.style.padding = '18px';
+  o.innerHTML = '<form class="panel" style="width:min(100%,440px);margin:0"><h2>Nueva tarea</h2><p class="sub">Aparecerá en “Para hoy” el día indicado.</p>' +
+    (k ? '' : '<label class="fld" style="margin-top:10px">Cliente<input id="tCli" list="tCliL" required placeholder="Escribe el nombre"><datalist id="tCliL">' + C.map(function(c){ return '<option value="' + esc(c.name) + '">'; }).join('') + '</datalist></label>') +
+    '<label class="fld" style="margin-top:10px">Qué hacer<input id="tTxt" required placeholder="Ej. avisar que llegó la talla M"></label>' +
+    '<div class="chips" style="margin:10px 0 0">' + [['Hoy', 0], ['Mañana', 1], ['En 3 días', 3], ['En una semana', 7]].map(function(x){ return '<button type="button" class="chip" data-in="' + x[1] + '">' + x[0] + '</button>'; }).join('') + '</div>' +
+    '<label class="fld" style="margin-top:8px">Fecha<input id="tDue" type="date" required value="' + addDays(today(), 1) + '"></label>' +
+    '<p class="status err" id="tErr"></p><div class="acts"><button type="button" class="btn sec" data-x>Cancelar</button><button class="btn">Guardar tarea</button></div></form>';
+  document.body.appendChild(o);
+  var q = function(s){ return o.querySelector(s); };
+  (q('#tCli') || q('#tTxt')).focus();
+  o.addEventListener('click', function(e){ var b = e.target.closest('[data-in]'); if (b) q('#tDue').value = addDays(today(), Number(b.dataset.in)); if (e.target.closest('[data-x]') || e.target === o) o.remove(); });
+  q('form').onsubmit = function(e){
+    e.preventDefault();
+    var key = k;
+    if (!key) { var v = norm(q('#tCli').value), m = C.filter(function(c){ return norm(c.name) === v; }); if (!m.length) { q('#tErr').textContent = 'Elige un cliente de la lista (o créalo en “Clientes → + Nueva”).'; return; } key = m[0].key; }
+    var task = {id: uid(), k: key, text: q('#tTxt').value.trim(), due: q('#tDue').value || today(), by: me(), at: today()};
+    mutate(function(st){ st.crm.tasks.push(task); }, 'Tarea guardada'); o.remove();
+    if (openKey) openClient(openKey);
+  };
+}
+async function newClient(){
+  var n = await promptBox('Nombre de la persona interesada:'); if (!n || !n.trim()) return;
+  var ph = await promptBox('Celular (opcional):');
+  var key = 'm' + uid(), d = today();
+  mutate(function(st){ st.crm.prof[key] = {name: n.trim(), phone: (ph || '').trim(), manual: true, created: d}; }, 'Contacto creado');
+  setTimeout(function(){ openClient(key); }, 50);
+}
+function exportCsv(){
+  var rows = [['Cliente', 'Celular', 'Cédula', 'Correo', 'Cumpleaños', 'Segmento', 'R', 'F', 'M', 'Compras', 'Prendas', 'Total', 'Ticket', 'Primera compra', 'Última compra', 'Días sin comprar', 'Saldo', 'Puntos', 'Acepta promos', 'Categorías', 'Etiquetas']];
+  C.forEach(function(c){ rows.push([c.name, c.phone, c.cedula, c.email, c.birthday, SEG[c.seg].n, c.R || '', c.Fs || '', c.Ms || '', c.F, c.units, c.total.toFixed(2), c.ticket.toFixed(2), c.first, c.last, c.days == null ? '' : c.days, c.balance.toFixed(2), c.points, c.ok === 'si' ? 'Sí' : c.ok === 'no' ? 'No' : '', c.topCat.join(' / '), c.tags.join(' / ')]); });
+  var csv = '﻿' + rows.map(function(r){ return r.map(function(v){ v = String(v == null ? '' : v); return /[";\n,]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }).join(';'); }).join('\r\n');
+  var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'}), name = 'Clientes_GaliaShop_' + today() + '.csv';
+  if (window.parent && window.parent.galiaSave) window.parent.galiaSave(blob, name);
+  else { var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click(); }
+}
+
+/* ============ Importar historial ============ */
+$('histFile').onchange = async function(){
+  var f = this.files[0]; this.value = ''; if (!f) return;
+  try {
+    var d = JSON.parse(await f.text());
+    if (!d || d.tipo !== 'galia-historial-clientes' || !Array.isArray(d.clientes)) throw 0;
+    var tot = d.clientes.reduce(function(n, c){ return n + c.h.reduce(function(m, v){ return m + Number(v[1]); }, 0); }, 0);
+    if (!(await confirmBox('Cargar el historial de ' + d.clientes.length + ' clientes (' + money(tot) + ' en compras hasta el ' + fmtY(d.corte) + ').\n\nNo modifica tus ventas; solo se usa para la ficha y los segmentos.'))) return;
+    var h = {corte: d.corte, fuente: d.fuente || '', cargado: today(), clientes: d.clientes};
+    mutate(function(st){ st.crm.hist = h; }, 'Historial cargado');
+  } catch(e) { tip('Ese archivo no es el historial de clientes de Galia Shop.', 3500); }
+};
+
+/* ============ Pintar ============ */
+function render(){
+  var buyers = C.filter(function(c){ return c.F; }), t = today();
+  var act = buyers.filter(function(c){ return c.days <= 60; }).length, rep = buyers.filter(function(c){ return c.F >= 2; }).length;
+  var debt = C.reduce(function(n, c){ return n + c.balance; }, 0), ov = C.filter(function(c){ return c.overdue.length; }).length;
+  $('kpis').innerHTML = '<div class="kpi"><small>Clientes</small><strong>' + buyers.length + '</strong><span>' + (C.length - buyers.length ? (C.length - buyers.length) + ' interesadas sin compra' : 'con al menos una compra') + '</span></div>' +
+    '<div class="kpi"><small>Activas (60 días)</small><strong>' + act + '</strong><span>' + (buyers.length ? Math.round(act / buyers.length * 100) : 0) + '% de la cartera</span></div>' +
+    '<div class="kpi"><small>Recompra</small><strong>' + (buyers.length ? Math.round(rep / buyers.length * 100) : 0) + '%</strong><span>volvieron a comprar</span></div>' +
+    '<div class="kpi"><small>Por cobrar</small><strong' + (debt ? ' style="color:#a1452f"' : '') + '>' + money(debt) + '</strong><span>' + (ov ? plural(ov, 'crédito vencido', 'créditos vencidos') : 'créditos de la app') + '</span></div>';
+  var b = '';
+  if (!S.crm.hist) b += '<div class="banner info"><span>📂 <b>Carga el historial</b> (junio – 2 de octubre) para ver las compras anteriores de las 125 clientas. Es el archivo “Historial_clientes_GaliaShop.json”.</span><button type="button" class="btn sm" id="bHist">Cargar historial</button></div>';
+  if (offline) b += '<div class="banner warn"><span>⚠️ No se pudo guardar en Google Drive. Los cambios quedan en este dispositivo y se envían solos cuando vuelva la conexión.</span><button type="button" class="btn sm sec" id="bRetry">Reintentar</button></div>';
+  $('banners').innerHTML = b;
+  if ($('bHist')) $('bHist').onclick = function(){ $('histFile').click(); };
+  if ($('bRetry')) $('bRetry').onclick = flush;
+  $('status').textContent = S.crm.hist ? 'Historial hasta el ' + fmtY(S.crm.hist.corte) + ' + ' + plural(sales.length, 'venta') + ' de la app.' : plural(sales.length, 'venta') + ' de la app.';
+  $('status').className = 'status';
+  // No se repinta lo que la persona está escribiendo
+  var ae = document.activeElement;
+  if (!(ae && ae.matches && ae.matches('textarea[data-tpl]'))) renderSeg();
+  if (!(ae && ae.id === 'q')) renderCli();
+  renderRfm(); if (!(ae && ae.closest && ae.closest('#v-pts input'))) renderPts();
+  ['seg', 'cli', 'rfm', 'pts'].forEach(function(v){ $('v-' + v).hidden = v !== view; });
+  if (openKey && $('ficha') && !fichaDirty) { var y = $('ficha').firstChild.scrollTop; openClient(openKey); $('ficha').firstChild.scrollTop = y; }
+}
+
+/* ============ Eventos ============ */
+$('views').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; view = b.dataset.v; Array.prototype.forEach.call(this.children, function(x){ x.classList.toggle('on', x === b); }); ['seg', 'cli', 'rfm', 'pts'].forEach(function(v){ $('v-' + v).hidden = v !== view; }); window.scrollTo({top: 0}); });
+document.addEventListener('click', function(e){
+  var t;
+  if ((t = e.target.closest('[data-close]')) || e.target.id === 'ficha') { closeClient(); return; }
+  if ((t = e.target.closest('a[data-wa]'))) { logContact(t.dataset.wa, t.dataset.type, t.dataset.task); return; }
+  if ((t = e.target.closest('[data-open]'))) { e.preventDefault(); openClient(t.dataset.open, t.dataset.focus); return; }
+  if ((t = e.target.closest('[data-done]'))) { logContact(t.dataset.done, t.dataset.type, t.dataset.task); return; }
+  if ((t = e.target.closest('[data-snooze]'))) { var id = t.dataset.snooze, d = addDays(today(), 3); mutate(function(st){ st.crm.tasks.forEach(function(x){ if (x.id === id) x.due = d; }); }, 'Tarea pospuesta'); return; }
+  if ((t = e.target.closest('[data-f]'))) { cliFilter = t.dataset.f; if (t.hasAttribute('data-gocli')) document.querySelector('#views [data-v="cli"]').click(); renderCli(); return; }
+  if ((t = e.target.closest('[data-goseg]'))) { cliFilter = t.dataset.goseg; view = 'cli'; document.querySelector('#views [data-v="cli"]').click(); renderCli(); return; }
+  if ((t = e.target.closest('[data-redeem]'))) { redeem(t.dataset.redeem); return; }
+  if ((t = e.target.closest('[data-task-for]'))) { taskDialog(t.dataset.taskFor); return; }
+  if ((t = e.target.closest('[data-nodup]'))) { var nd = t.dataset.nodup; mutate(function(st){ if (st.crm.nodup.indexOf(nd) < 0) st.crm.nodup.push(nd); }, 'Marcadas como distintas'); return; }
+  if ((t = e.target.closest('[data-merge]'))) { var pr = t.dataset.merge.split('|'), a = byKey[pr[0]], b = byKey[pr[1]]; if (!a || !b) return; var keep = (b.name.length > a.name.length || (b.name.length === a.name.length && b.total > a.total)) ? b : a, gone = keep === a ? b : a;
+    confirmBox('¿Unir “' + gone.name + '” dentro de “' + keep.name + '”?\nSus compras se sumarán en una sola ficha. Se puede separar después.').then(function(ok){ if (ok) mergeInto(keep.key, gone.key); }); return; }
+  if ((t = e.target.closest('[data-unmerge]'))) { var u = t.dataset.unmerge; mutate(function(st){ delete st.crm.alias[u]; }, 'Registros separados'); return; }
+  if ((t = e.target.closest('[data-bonus]'))) { var bk = t.dataset.bonus; promptBox('¿Cuántos puntos de regalo?').then(function(v){ var n = Math.round(Number(v) || 0); if (!n) return; var m = {id: uid(), k: bk, d: today(), p: n, m: 'Regalo', by: me()}; mutate(function(st){ st.crm.pts.mov.push(m); }, 'Puntos agregados'); }); return; }
+});
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && openKey) closeClient(); });
+var tplT;
+document.addEventListener('input', function(e){
+  var ta = e.target.closest('textarea[data-tpl]'); if (!ta) return;
+  clearTimeout(tplT); var k = ta.dataset.tpl;
+  tplT = setTimeout(function(){ var v = ta.value; S.tpl[k] = v; queue.push(function(st){ st.tpl[k] = v; }); flush(); tip('Mensaje guardado', 1200); }, 700);
+});
+document.addEventListener('change', function(e){ if (e.target.id === 'cfgConsent') { var v = e.target.checked; mutate(function(st){ st.crm.cfg.consent = v; }, v ? 'Se pedirá permiso antes de promociones' : 'Promociones sin pedir permiso'); } });
+
+/* ============ Arranque ============ */
+(async function(){
+  var ok = true;
+  try { var rs = await fetch('/api/settings', {cache: 'no-store'}); if (!rs.ok) throw 0; S = fix((await rs.json()).settings || {}); }
+  catch(_){ ok = false; try { S = fix(JSON.parse(localStorage.getItem(LSB) || '{}')); } catch(__){ S = fix({}); } offline = true; }
+  try { var r = await fetch('/api/sales', {cache: 'no-store'}); if (!r.ok) throw 0; sales = (await r.json()).sales || []; }
+  catch(_){ ok = false; try { sales = JSON.parse(localStorage.getItem('galia-shop-sales-v1') || '[]'); } catch(__){} }
+  try { var ri = await fetch('/api/inventory', {cache: 'no-store'}); if (!ri.ok) throw 0; inventory = (await ri.json()).inventory || []; }
+  catch(_){ try { inventory = JSON.parse(localStorage.getItem('galia-shop-inventory-v1') || '[]'); } catch(__){} }
+  rebuild();
+  if (!ok) { $('status').textContent = 'Sin conexión: se muestran los datos guardados en este dispositivo.'; $('status').className = 'status err'; }
+})();
+})();
+</script></body></html>
